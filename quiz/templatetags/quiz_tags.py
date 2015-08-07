@@ -22,4 +22,6 @@ def correct_answer_for_all(context, question):
 
 @register.filter
 def answer_choice_to_string(question, answer):
-    return question.answer_choice_to_string(answer)
+    return answer
+    #return question.answer_choice_to_string(answer)
+

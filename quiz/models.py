@@ -160,7 +160,10 @@ class Quiz(models.Model):
 
     @property
     def get_max_score(self):
-        return self.get_questions().count()
+        print "get_max_score"
+        print self.quiz.count()
+        #return self.get_questions().count()
+        return self.quiz.count()
 
     def anon_score_id(self):
         return str(self.id) + "_score"
@@ -493,9 +496,12 @@ class Sitting(models.Model):
 
     def get_questions(self, with_answers=False):
         question_ids = self._question_ids()
+        #print self.quiz.question_set.filter(id__in=question_ids).select_subclasses()
         questions = sorted(
-            self.quiz.question_set.filter(id__in=question_ids)
-                                  .select_subclasses(),
+            
+            Question.objects.filter(id__in=question_ids),
+            #self.quiz.question_set.filter(id__in=question_ids)
+            #                      .select_subclasses(),
             key=lambda q: question_ids.index(q.id))
 
         if with_answers:
@@ -508,7 +514,7 @@ class Sitting(models.Model):
     @property
     def questions_with_user_answers(self):
         return {
-            q: q.user_answer for q in self.get_questions(with_answers=True)
+            str(q): q.user_answer for q in self.get_questions(with_answers=True)
         }
 
     @property
@@ -534,7 +540,8 @@ class Question(models.Model):
 
     quiz = models.ManyToManyField(Quiz,
                                   verbose_name=_("Quiz"),
-                                  blank=True)
+                                  blank=True,
+                                  related_name = "quiz")
 
     category = models.ForeignKey(Category,
                                  verbose_name=_("Category"),
