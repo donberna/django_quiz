@@ -96,6 +96,7 @@ class Quiz_Serializer(serializers.ModelSerializer):
     class Meta():
         model = Quiz
         fields = ('id' ,'title', 'description', 'url', 'category', 'random_order', 'max_questions', 'answers_at_end', 'exam_paper', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
+        read_only_fields = ('id')
 
 
 
