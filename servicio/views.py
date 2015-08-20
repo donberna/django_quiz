@@ -165,6 +165,51 @@ class Quiz_List_by_Category_View(generics.ListAPIView):
 #	take Quiz 
 #-----------------------------------
 
+class Quiz_Sitting_create_View(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = Create_Sitting_Serializer
+
+
+class Quiz_Take_View(APIView):
+    permission_classes = (AllowAny,)
+
+    def dispatch(self, request, *args, **kwargs):
+        
+        #se obtiene el quiz 
+        quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
+        print quiz
+
+        #se pregunta si el usuario esta autenticado  
+        logged_in_user = self.request.user.is_authenticated()
+        print logged_in_user
+
+        # se ontienen las preguntas del quiz 
+        if quiz.random_order is True:
+            question_set = Question.objects.filter(quiz= quiz.id).order_by('?')
+        else:
+            question_set = Question.objects.filter(quiz= quiz.id)
+
+        question_set = question_set.values_list('id', flat=True)
+        if quiz.max_questions and quiz.max_questions < len(question_set):
+            question_set = question_set[: quiz.max_questions]
+
+        questions = ",".join(map(str, question_set)) + ","
+        print questions
+
+        #1 crear el sitting con lo q ya tengo 
+
+        return super(Quiz_Take_View, self).dispatch(request, *args, **kwargs)
+
+    def post(self):
+        serializer_class = Create_Sitting_Serializer
+        if self.logged_in_user:
+            # se crea el sitting 
+            self.sitting = Sitting.objects.user_sitting(request.user,
+                                                        self.quiz)
+
+
+
+
 #-----------------------------------
 #	finish Quiz 
 #-----------------------------------
@@ -187,6 +232,7 @@ class Sitting_Filter_Title_Mixin(object):
         return queryset
 
 
+#trae la lista de quizes completos de todos los usuarios 
 class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, generics.ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = Sitting_Serializer
@@ -213,7 +259,7 @@ class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet)
         return Sitting.objects.filter(id = self.kwargs['pk'])
 
     # si va a cambiar el valor respuesta por 
-    def post(self, request, *args, **kwargs):
+    """def post(self, request, *args, **kwargs):
         sitting = self.get_object()
 
         q_to_toggle = request.POST.get('qid', None)
@@ -224,20 +270,7 @@ class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet)
             else:
                 sitting.add_incorrect_question(q)
 
-        return self.get(request)
-
-"""
-	esto  retorna un diccionario representando el contexto del template no se como acomodarlo en rest 
-	Segun lo q he buscado en el seriaizar con  to_representation aunque no estoy seguro
-
-    def get_context_data(self, **kwargs):
-    	print 'context'
-        context = super(Quiz_Marking_Detail_View, self).get_context_data(**kwargs)
-        context['questions'] =\
-            context['sitting'].get_questions(with_answers=True)
-        print context
-        return context
-"""
+        return self.get(request)"""
 
 
 
@@ -252,21 +285,14 @@ class Quiz_User_Progress_View(generics.ListAPIView):
         return super(Quiz_User_Progress_View, self)\
             .dispatch(request, *args, **kwargs)
 
-"""
-	Falta acomodar esto que es para traer todos los intentos de los quizzes
-    def get_context_data(self, **kwargs):
-    	print 'get_context_data'
-        context = super(Quiz_User_Progress_View, self).get_context_data(**kwargs)
-        progress, c = Progress.objects.get_or_create(user=self.request.user)
-        context['cat_scores'] = progress.list_all_cat_scores
-        context['exams'] = progress.show_exams()
-        return context
-"""
 
-
-
-
-
-
-
+#trae todos los intentos de los quizzes de un usuario
+class Quiz_show_exams_View(generics.ListAPIView):
+    permission_classes = (AllowAny,)
+    #queryset = Progress.objects.all()
+    serializer_class = Sitting_Serializer #
+    def get_queryset(self):
+        print self.kwargs['pk']
+        user = self.kwargs['pk']
+        return Sitting.objects.filter(user=user, complete=True)
 

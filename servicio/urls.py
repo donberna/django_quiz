@@ -35,10 +35,11 @@ routerQuiz = format_suffix_patterns([
 	url(r'^listQuizbyCategory/(?P<category_name>[\w.-]+)$', Quiz_List_by_Category_View.as_view() , name='listQuizbyCategory'),
 	url(r'^detail/(?P<pk>[0-9]+)/$', Quiz_Detail_View.as_view({'get': 'retrieve'}), name='detailQuiz'),
 	url(r'^marking$', Quiz_Marking_List_View.as_view(), name='markingQuiz'),
+	url(r'^createSitting/(?P<pk>[0-9]+)/$', Quiz_Sitting_create_View.as_view({'post': 'create'}), name='createSitting'),
 	url(r'^marking/detail/(?P<pk>[0-9]+)/$', Quiz_Marking_Detail_View.as_view({'get': 'retrieve'}), name='markingQuiz'),
-	#url(r'^(?P<quiz_name>[\w-]+)/take/$', Quiz_Take_View.as_view(), name='takeQuiz'),
+	url(r'^(?P<pk_quiz>[0-9]+)/take/$', Quiz_Take_View.as_view(), name='takeQuiz'),
 	url(r'^progress$', Quiz_User_Progress_View.as_view() , name='progressQuiz'),
-	
+	url(r'^progress/exams/(?P<pk>[0-9]+)/$',  Quiz_show_exams_View.as_view() , name='progressExamsQuiz'),
 	])
 
 
