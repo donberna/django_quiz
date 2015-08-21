@@ -243,7 +243,7 @@ class Quiz_Take_View(APIView):
         #print id_quiz
 
         #se pregunta si el usuario esta autenticado  
-        logged_in_user = request.POST
+        logged_in_user = request.POST['id']
         print 'logged_in_user'
         print logged_in_user
 
