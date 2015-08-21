@@ -30,7 +30,7 @@ class Multichoice_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new Multichoice question.
 	  """
-	  serializer_class = Create_MC_Question_Serializer
+	  serializer_class = Multichoice_Serializer
 	  permission_classes = (AllowAny,)
 
 
@@ -38,9 +38,41 @@ class Multichoice_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Multichoice questions
 	  """
-	  serializer_class = List_Multichoice_Serializer
+	  serializer_class = Multichoice_Serializer
 	  queryset = MCQuestion.objects.all()
 	  permission_classes = (AllowAny,)
+
+
+class Multichoice_Answer_Create(generics.CreateAPIView):
+      """
+      A simple View to show all Multichoice questions
+      """
+      serializer_class = Answer_MC_Question_Serializer
+      permission_classes = (AllowAny,)
+
+
+class Multichoice_Answer_List_View(generics.ListAPIView):
+      """
+      A simple View to show all Multichoice questions
+      """
+      serializer_class = Answer_MC_Question_Serializer
+      permission_classes = (AllowAny,)
+
+      def get_queryset(self):
+        queryset = Answer.objects.all();
+        return queryset.filter(question=self.kwargs['pk'])
+
+
+class Multichoice_Answer_Detail(generics.ListAPIView):
+      """
+      A simple View to show all Multichoice questions
+      """
+      serializer_class = Multichoice_Serializer
+      permission_classes = (AllowAny,)
+
+      def get_queryset(self):
+        queryset = Answer.objects.all();
+        return queryset.filter(question=self.kwargs['pk'])
 
 
 class Essay_Create_View(generics.CreateAPIView):
@@ -58,6 +90,30 @@ class Essay_List_View(generics.ListAPIView):
 	  serializer_class = E_Question_Serializer
 	  queryset = Essay_Question.objects.all()
 	  permission_classes = (AllowAny,)
+
+
+class Question_Detail_View(APIView):
+    """
+    View to bring the info of a quiz
+    """
+    permission_classes = (AllowAny,)
+    
+    def get(self,*args, **kwargs):
+        queryset = Question.objects.get_subclass(id = self.kwargs['pk'])
+        print queryset
+        clase = queryset.__class__
+        
+        if clase is Essay_Question:
+            serializer = E_Question_Serializer(queryset)
+        
+        #if clase is MCQuestion:
+            #serializer= Create_MC_Question_Serializer(queryset)
+        
+        if clase is TF_Question:
+            serializer = TF_Question_Serializer(queryset)
+
+        return Response(serializer.data)
+        
 
 
 #-----------------------------------
@@ -165,23 +221,30 @@ class Quiz_List_by_Category_View(generics.ListAPIView):
 #	take Quiz 
 #-----------------------------------
 
-class Quiz_Sitting_create_View(viewsets.ModelViewSet):
+class Quiz_Sitting_View(generics.ListAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = Create_Sitting_Serializer
+    queryset = Sitting.objects.all()
+    serializer_class = Sitting_Serializer
 
+
+from rest_framework.response import Response
+from django.http import Http404
+from rest_framework import status
 
 class Quiz_Take_View(APIView):
+    
     permission_classes = (AllowAny,)
 
     def dispatch(self, request, *args, **kwargs):
         
         #se obtiene el quiz 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
-        print quiz
+        id_quiz = quiz.id
+        #print id_quiz
 
         #se pregunta si el usuario esta autenticado  
-        logged_in_user = self.request.user.is_authenticated()
-        print logged_in_user
+        logged_in_user = self.request.user.id
+        #print logged_in_user
 
         # se ontienen las preguntas del quiz 
         if quiz.random_order is True:
@@ -194,18 +257,29 @@ class Quiz_Take_View(APIView):
             question_set = question_set[: quiz.max_questions]
 
         questions = ",".join(map(str, question_set)) + ","
-        print questions
+        #print questions
 
         #1 crear el sitting con lo q ya tengo 
+        self.sitting = { 'user':logged_in_user,
+                    'quiz':id_quiz,
+                    'question_order':questions,
+                    'question_list':questions,
+                    'incorrect_questions':"",
+                    'current_score':0,
+                    'complete':False,
+                    'user_answers':'{}'}
+
+        #print sitting
 
         return super(Quiz_Take_View, self).dispatch(request, *args, **kwargs)
 
-    def post(self):
-        serializer_class = Create_Sitting_Serializer
-        if self.logged_in_user:
-            # se crea el sitting 
-            self.sitting = Sitting.objects.user_sitting(request.user,
-                                                        self.quiz)
+    def post(self, request, *args, **kwargs):
+        serializer = Sitting_Serializer(data=self.sitting)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 
@@ -237,18 +311,17 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
     permission_classes = (AllowAny,)
     serializer_class = Sitting_Serializer
 
-    def get_queryset(self):
-        
+    def get_queryset(self):    
         queryset = Sitting.objects.filter(complete=True)
 
-        """
-        Aqui se acomoda lo de filtrar por el usuario 
+    #    """
+    #    Aqui se acomoda lo de filtrar por el usuario 
 
-        user_filter = self.request.GET.get('user_filter')
-        if user_filter:
-            queryset = queryset.filter(user__username__icontains=user_filter)
-        """
-        return queryset
+    #    user_filter = self.request.GET.get('user_filter')
+    #    if user_filter:
+    #        queryset = queryset.filter(user__username__icontains=user_filter)
+    #    """
+    #    return queryset
 
 
 class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet):

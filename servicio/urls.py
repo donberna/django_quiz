@@ -11,8 +11,13 @@ routerQuestions = format_suffix_patterns([
 	url(r'^createMultichoice$', Multichoice_Create_View.as_view() , name='createMultichoice'),
 	url(r'^listMultichoice$', Multichoice_List_View.as_view() , name='listMultichoice'),
 
+	url(r'^createAnswerMultichoice$', Multichoice_Answer_Create.as_view() , name='createMultichoice'),
+	url(r'^MultichoiceAnswerList/(?P<pk>[0-9]+)/$', Multichoice_Answer_List_View.as_view() , name='createMultichoice'),
+
 	url(r'^createEssay$', Essay_Create_View.as_view() , name='createEssay'),
 	url(r'^listEssay$', Essay_List_View.as_view() , name='listEssay'),
+
+	url(r'^/detail/(?P<pk>[0-9]+)/$', Question_Detail_View.as_view() , name='questionDetail'),
 	])
 
 
@@ -35,7 +40,7 @@ routerQuiz = format_suffix_patterns([
 	url(r'^listQuizbyCategory/(?P<category_name>[\w.-]+)$', Quiz_List_by_Category_View.as_view() , name='listQuizbyCategory'),
 	url(r'^detail/(?P<pk>[0-9]+)/$', Quiz_Detail_View.as_view({'get': 'retrieve'}), name='detailQuiz'),
 	url(r'^marking$', Quiz_Marking_List_View.as_view(), name='markingQuiz'),
-	url(r'^createSitting/(?P<pk>[0-9]+)/$', Quiz_Sitting_create_View.as_view({'post': 'create'}), name='createSitting'),
+	url(r'^allSitting/$', Quiz_Sitting_View.as_view(), name='Sitting'),
 	url(r'^marking/detail/(?P<pk>[0-9]+)/$', Quiz_Marking_Detail_View.as_view({'get': 'retrieve'}), name='markingQuiz'),
 	url(r'^(?P<pk_quiz>[0-9]+)/take/$', Quiz_Take_View.as_view(), name='takeQuiz'),
 	url(r'^progress$', Quiz_User_Progress_View.as_view() , name='progressQuiz'),
