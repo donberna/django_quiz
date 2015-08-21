@@ -243,8 +243,8 @@ class Quiz_Take_View(APIView):
         #print id_quiz
 
         #se pregunta si el usuario esta autenticado  
-        logged_in_user = self.request.user.id
-        #print logged_in_user
+        logged_in_user = self.context['request'].user
+        print logged_in_user
 
         # se ontienen las preguntas del quiz 
         if quiz.random_order is True:
