@@ -307,12 +307,12 @@ class SittingManager(models.Manager):
 
     def new_sitting(self, user, quiz):
         if quiz.random_order is True:
-            question_set = quiz.question_set.all() \
-                                            .select_subclasses() \
-                                            .order_by('?')
+            question_set = Question.objects.filter(quiz= quiz.id).order_by('?')#quiz.question_set.all() \
+                           #                 .select_subclasses() \
+                           #                 .order_by('?')
         else:
-            question_set = quiz.question_set.all() \
-                                            .select_subclasses()
+            question_set = Question.objects.filter(quiz= quiz.id)#quiz.question_set.all() \
+                           #                 .select_subclasses()
 
         question_set = question_set.values_list('id', flat=True)
         if quiz.max_questions and quiz.max_questions < len(question_set):

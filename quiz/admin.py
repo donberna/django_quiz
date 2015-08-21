@@ -2,10 +2,14 @@ from django import forms
 from django.contrib import admin
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
-from .models import Quiz, Category, SubCategory, Progress, Question
+from .models import Quiz, Category, SubCategory, Progress, Question, Sitting
 from multichoice.models import MCQuestion, Answer
 from true_false.models import TF_Question
 from essay.models import Essay_Question
+
+#comentario
+class SittingAdmin(admin.ModelAdmin):
+    model = Sitting
 
 
 class AnswerInline(admin.TabularInline):
@@ -109,3 +113,4 @@ admin.site.register(MCQuestion, MCQuestionAdmin)
 admin.site.register(Progress, ProgressAdmin)
 admin.site.register(TF_Question, TFQuestionAdmin)
 admin.site.register(Essay_Question, EssayQuestionAdmin)
+admin.site.register(Sitting, SittingAdmin)
