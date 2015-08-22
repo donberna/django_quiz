@@ -105,14 +105,21 @@ class Question_Detail_View(APIView):
         
         if clase is Essay_Question:
             serializer = E_Question_Serializer(queryset)
+            data = serializer.data
+            data.update({'clase': str(clase)})
+            
         
         #if clase is MCQuestion:
             #serializer= Create_MC_Question_Serializer(queryset)
         
         if clase is TF_Question:
             serializer = TF_Question_Serializer(queryset)
+            data = serializer.data
+            data.update({'clase': str(clase)})
 
-        return Response(serializer.data)
+        
+        #return Response(serializer.data)
+        return Response(data)
         
 
 
