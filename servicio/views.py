@@ -109,8 +109,10 @@ class Question_Detail_View(APIView):
             data.update({'clase': str(clase)})
             
         
-        #if clase is MCQuestion:
-            #serializer= Create_MC_Question_Serializer(queryset)
+        if clase is MCQuestion:
+            serializer= Multichoice_Serializer(queryset)
+            data = serializer.data
+            data.update({'clase': str(clase)})
         
         if clase is TF_Question:
             serializer = TF_Question_Serializer(queryset)
