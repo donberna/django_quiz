@@ -291,6 +291,32 @@ class Quiz_Take_View(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
+class Quiz_Qualify_View(APIView):
+
+    def post(self,request):
+        print 'post'
+        print request.id
+        print request.clase
+        self.id = request.id
+        self.clase = request.clase
+
+        #<class 'true_false.models.TF_Question'>
+        if clase is Essay_Question:
+            question = Question.objects.get_subclass(id = request.id)
+            serializer = E_Question_Serializer(question)
+            data = serializer.data
+            
+        
+        if clase is MCQuestion:
+            question = Answer.objects.filter(question=request.id)
+            serializer= Answer_MC_Question_Serializer(question)
+            data = serializer.data
+
+        
+        if clase is TF_Question:
+            question = Question.objects.get_subclass(id = request.id)
+            serializer = TF_Question_Serializer(question)
+            data = serializer.data
 
 
 
