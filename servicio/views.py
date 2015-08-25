@@ -100,7 +100,6 @@ class Question_Detail_View(APIView):
     
     def get(self,*args, **kwargs):
         queryset = Question.objects.get_subclass(id = self.kwargs['pk'])
-        print queryset
         clase = queryset.__class__
         
         if clase is Essay_Question:
@@ -253,8 +252,6 @@ class Quiz_Take_View(APIView):
 
         #se pregunta si el usuario esta autenticado  
         logged_in_user = request.POST['id']
-        print 'logged_in_user'
-        print logged_in_user
 
         # se ontienen las preguntas del quiz 
         if quiz.random_order is True:

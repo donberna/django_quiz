@@ -16,7 +16,6 @@ class Question_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create TF_Question
     """
-    print "serializers"
     class Meta():
         model = Question
 
