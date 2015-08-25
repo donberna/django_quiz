@@ -292,28 +292,27 @@ class Quiz_Qualify_View(APIView):
 
     def post(self,request):
         print 'post'
-        print request.POST['id']
-        print request.POST['clase']
-        """self.id = request.id
-        self.clase = request.clase
-
+        self.id = request.POST['id']
+        self.clase = request.POST['clase']
+        
         #<class 'true_false.models.TF_Question'>
-        if clase is Essay_Question:
-            question = Question.objects.get_subclass(id = request.id)
+        if self.clase is Essay_Question:
+            question = Question.objects.get_subclass(id = self.id)
             serializer = E_Question_Serializer(question)
             data = serializer.data
             
         
-        if clase is MCQuestion:
-            question = Answer.objects.filter(question=request.id)
+        if self.clase is MCQuestion:
+            question = Answer.objects.filter(question=self.id)
             serializer= Answer_MC_Question_Serializer(question)
             data = serializer.data
 
         
-        if clase is TF_Question:
-            question = Question.objects.get_subclass(id = request.id)
+        if self.clase is TF_Question:
+            print 'entro if'
+            question = Question.objects.get_subclass(id = self.id)
             serializer = TF_Question_Serializer(question)
-            data = serializer.data"""
+            data = serializer.data
 
 
 
