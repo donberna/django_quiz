@@ -295,8 +295,8 @@ class Quiz_Qualify_View(APIView):
         self.id = request.POST['id']
         self.clase = str(request.POST['clase'])
         print self.clase
-        
-        #<class 'true_false.models.TF_Question'>
+        print TF_Question
+       
         if self.clase is Essay_Question:
             question = Question.objects.get_subclass(id = self.id)
             serializer = E_Question_Serializer(question)
@@ -309,7 +309,7 @@ class Quiz_Qualify_View(APIView):
             data = serializer.data
 
         #<class 'true_false.models.TF_Question'>
-        if self.clase is TF_Question:
+        if self.clase is "<class 'true_false.models.TF_Question'>"#TF_Question:
             print 'entro if'
             question = Question.objects.get_subclass(id = self.id)
             serializer = TF_Question_Serializer(question)
