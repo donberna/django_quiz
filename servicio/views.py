@@ -315,6 +315,8 @@ class Quiz_Qualify_View(APIView):
             serializer = TF_Question_Serializer(question)
             data = serializer.data
 
+        return Response(data)
+
 
 
 #-----------------------------------
