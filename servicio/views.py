@@ -293,13 +293,13 @@ class Quiz_Qualify_View(APIView):
 
     def post(self,request):
         print 'post'
+        print ContentType.objects.get_for_model(MCQuestion)
         id = request.POST['id']
         clase = request.POST['clase']
         answered = request.POST['answered']
         correcta = ""
         
         print answered
-        print ContentType.objects.get_for_model(MCQuestion)
 
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
             #print 'TF_Question'
