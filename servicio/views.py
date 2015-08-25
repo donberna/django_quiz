@@ -301,7 +301,7 @@ class Quiz_Qualify_View(APIView):
         
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
             print 'TF_Question'
-            question = Question.objects.get(id = id)
+            question = TF_Question.objects.get(id = id)
             serializer = TF_Question_Serializer(question)
             print serializer.data
             if serializer.data['correct'] == answered:
