@@ -295,9 +295,10 @@ class Quiz_Qualify_View(APIView):
         print 'post'
         id = request.POST['id']
         clase = request.POST['clase']
-        
         question = Question.objects.get_subclass(id = id)
 
+        print clase
+        print ContentType.objects.get_for_model(TF_Question)
         if clase == ContentType.objects.get_for_model(TF_Question) :
             print 'hola'
 
