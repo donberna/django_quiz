@@ -325,7 +325,7 @@ class Quiz_Qualify_View(APIView):
             data = serializer.data
             correcta = False
 
-        print correcta
+
         return Response(serializer.data)
     
 
