@@ -295,6 +295,7 @@ class Quiz_Qualify_View(APIView):
         print 'post'
         id = request.POST['id']
         clase = request.POST['clase']
+        correcta = ""
         
 
         print clase
