@@ -295,33 +295,36 @@ class Quiz_Qualify_View(APIView):
         print 'post'
         id = request.POST['id']
         clase = request.POST['clase']
+        answered = request.POST['answered']
         correcta = ""
         
 
         print clase
         print ContentType.objects.get_for_model(TF_Question)
         
-        if clase == str(ContentType.objects.get_for_model(TF_Question)) :
+        if clase == str(ContentType.objects.get_for_model(TF_Question)):
             print 'TF_Question'
-            question = Question.objects.get_subclass(id = id)
+            question = Question.objects.get(id = id)
             serializer= E_Question_Serializer(queryset)
-            if serializer.data['Correct'] == True:
+
+            if serializer.data['Correct'] == answered:
                 correcta = True
             else:
                 correcta = False
 
-        if clase == ContentType.objects.get_for_model(MCQuestion):
+        if clase == str(ContentType.objects.get_for_model(MCQuestion)):
+            question = Answer.objects.filter(id = id)
             serializer= Multichoice_Serializer(queryset)
             data = serializer.data
             
         
-        if clase == ContentType.objects.get_for_model(TF_Question):
-            question = Question.objects.get_subclass(id = id)
+        if clase == str(ContentType.objects.get_for_model(Essay_Question)):
+            question = Question.objects.get(id = id)
             serializer = TF_Question_Serializer(queryset)
             data = serializer.data
-            
+            correcta = False
 
-
+        print correcta
         return Response({'correcta':correcta})
     
 
