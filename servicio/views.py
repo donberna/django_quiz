@@ -298,16 +298,13 @@ class Quiz_Qualify_View(APIView):
         answered = request.POST['answered']
         correcta = ""
         
-
-        print clase
-        print ContentType.objects.get_for_model(TF_Question)
         
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
             print 'TF_Question'
             question = Question.objects.get(id = id)
             serializer= E_Question_Serializer(question)
-
-            if serializer.data['Correct'] == answered:
+            print serializer.data
+            if serializer.data['correct'] == answered:
                 correcta = True
             else:
                 correcta = False
