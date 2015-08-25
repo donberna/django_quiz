@@ -293,7 +293,7 @@ class Quiz_Qualify_View(APIView):
     def post(self,request):
         print 'post'
         self.id = request.POST['id']
-        self.clase = request.POST['clase']
+        self.clase = str(request.POST['clase'])
         print self.clase
         
         #<class 'true_false.models.TF_Question'>
