@@ -100,20 +100,20 @@ class Question_Detail_View(APIView):
     
     def get(self,*args, **kwargs):
         queryset = Question.objects.get_subclass(id = self.kwargs['pk'])
-        clase = queryset.__class__
+        clase = ContentType.objects.get_for_model(queryset)
         
-        if clase is Essay_Question:
+        if clase is ContentType.objects.get_for_model(Essay_Question):
             serializer = E_Question_Serializer(queryset)
             data = serializer.data
             data.update({'clase': str(clase)})
             
         
-        if clase is MCQuestion:
+        if clase is ContentType.objects.get_for_model(MCQuestion):
             serializer= Multichoice_Serializer(queryset)
             data = serializer.data
             data.update({'clase': str(clase)})
         
-        if clase is TF_Question:
+        if clase is ContentType.objects.get_for_model(TF_Question):
             serializer = TF_Question_Serializer(queryset)
             data = serializer.data
             data.update({'clase': str(clase)})
@@ -295,33 +295,34 @@ class Quiz_Qualify_View(APIView):
         print 'post'
         id = request.POST['id']
         clase = request.POST['clase']
-        question = Question.objects.get_subclass(id = id)
+        
 
         print clase
         print ContentType.objects.get_for_model(TF_Question)
+        
         if clase == ContentType.objects.get_for_model(TF_Question) :
-            print 'hola'
+            print 'TF_Question'
+            question = Question.objects.get_subclass(id = id)
+            serializer= E_Question_Serializer(queryset)
+            if serializer.data['Correct'] == True:
+                correcta = True
+            else:
+                correcta = False
 
-        return Response({})
-    """if self.clase is Essay_Question:
-            question = Question.objects.get_subclass(id = self.id)
-            serializer = E_Question_Serializer(question)
+        if clase == ContentType.objects.get_for_model(MCQuestion):
+            serializer= Multichoice_Serializer(queryset)
             data = serializer.data
             
         
-        if self.clase is MCQuestion:
-            question = Answer.objects.filter(question=self.id)
-            serializer= Answer_MC_Question_Serializer(question)
+        if clase == ContentType.objects.get_for_model(TF_Question):
+            question = Question.objects.get_subclass(id = id)
+            serializer = TF_Question_Serializer(queryset)
             data = serializer.data
+            
 
-        #<class 'true_false.models.TF_Question'>
-        if self.clase is TF_Question:
-            print 'entro if'
-            question = Question.objects.get_subclass(id = self.id)
-            serializer = TF_Question_Serializer(question)
-            data = serializer.data
 
-        return Response(data)"""
+        return Response({'correcta':correcta})
+    
 
 
 
