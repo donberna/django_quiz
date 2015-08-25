@@ -298,7 +298,8 @@ class Quiz_Qualify_View(APIView):
         answered = request.POST['answered']
         correcta = ""
         
-        
+        print answered
+
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
             print 'TF_Question'
             question = TF_Question.objects.get(id = id)
