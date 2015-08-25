@@ -303,7 +303,8 @@ class Quiz_Qualify_View(APIView):
             print 'TF_Question'
             question = TF_Question.objects.get(id = id)
             serializer = TF_Question_Serializer(question)
-            print serializer.data
+            print serializer.data['correct']
+            print answered
             if serializer.data['correct'] == answered:
                 correcta = True
             else:
