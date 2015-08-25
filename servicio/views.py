@@ -308,7 +308,7 @@ class Quiz_Qualify_View(APIView):
             data = serializer.data
 
         
-        if self.clase is TF_Question:
+        if self.clase is "<class 'true_false.models.TF_Question'>"#TF_Question:
             print 'entro if'
             question = Question.objects.get_subclass(id = self.id)
             serializer = TF_Question_Serializer(question)
