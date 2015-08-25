@@ -301,7 +301,7 @@ class Quiz_Qualify_View(APIView):
         if clase == ContentType.objects.get_for_model(TF_Question) :
             print 'hola'
 
-       
+        return Response({})
     """if self.clase is Essay_Question:
             question = Question.objects.get_subclass(id = self.id)
             serializer = E_Question_Serializer(question)
