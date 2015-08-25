@@ -307,9 +307,11 @@ class Quiz_Qualify_View(APIView):
             #print serializer.data['correct']
             #print answered
             if str(serializer.data['correct']) == answered:
+                print 'correcta'
                 serializer.data['correct'] = True
                 #correcta = True
             else:
+                print 'incorrecta'
                 serializer.data['correct'] = False
                 #correcta = False
 
@@ -323,7 +325,7 @@ class Quiz_Qualify_View(APIView):
             question = Question.objects.get(id = id)
             serializer= E_Question_Serializer(question)
             data = serializer.data
-            correcta = False
+            #correcta = False
 
 
         return Response(serializer.data)
