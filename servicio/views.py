@@ -296,8 +296,12 @@ class Quiz_Qualify_View(APIView):
         self.clase = request.POST['clase']
         print self.clase
         print TF_Question
+
+        if self.clase is TF_Question:
+            print 'hola'
+
        
-        if self.clase is Essay_Question:
+    """if self.clase is Essay_Question:
             question = Question.objects.get_subclass(id = self.id)
             serializer = E_Question_Serializer(question)
             data = serializer.data
@@ -315,7 +319,7 @@ class Quiz_Qualify_View(APIView):
             serializer = TF_Question_Serializer(question)
             data = serializer.data
 
-        return Response(data)
+        return Response(data)"""
 
 
 
