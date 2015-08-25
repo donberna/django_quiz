@@ -288,6 +288,7 @@ class Quiz_Take_View(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
+from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
     def post(self,request):
