@@ -311,7 +311,6 @@ class Quiz_Qualify_View(APIView):
             else:
                 correcta = False
 
-
         if clase == str(ContentType.objects.get_for_model(MCQuestion)):
             print 'MC_Question'
             
@@ -331,11 +330,15 @@ class Quiz_Qualify_View(APIView):
         if clase == str(ContentType.objects.get_for_model(Essay_Question)):
             question = Question.objects.get(id = id)
             serializer= E_Question_Serializer(question)
-            data = serializer.data
             correcta = False
 
         print correcta
-        return Response({'correcta':correcta, 'explanation': serializer.data['explanation']})
+        data = serializer.data
+        data.update({'correcta': correcta})
+        data.update({'answered': answered})
+
+        return Response(data)
+        #return Response({'correcta':correcta, 'explanation': serializer.data['explanation']})
     
 
 
