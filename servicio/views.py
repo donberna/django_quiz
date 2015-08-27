@@ -346,7 +346,7 @@ class Quiz_Check_Passed_View(APIView):
         id_quiz = request.POST['id_quiz']
         print id_quiz
         percent = int(request.POST['percent'])
-        print porcent
+        print percent
         quiz = Quiz.objects.get(id = id_quiz) 
         response = {'check_if_passed':False, 'message': ''}
 
