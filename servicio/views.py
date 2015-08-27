@@ -343,19 +343,20 @@ class Quiz_Qualify_View(APIView):
 
 class Quiz_Check_Passed_View(APIView):
     def post(self, request):
-        id_quiz = request.POST['id_quiz']
-        print id_quiz
+        id_quiz = request.POST['id_quiz']        
         percent = int(request.POST['percent'])
-        print percent
+
         quiz = Quiz.objects.get(id = id_quiz) 
         response = {'check_if_passed':False, 'message': ''}
 
         if(percent >= quiz.pass_mark):
+            print 'entro'
             response['check_if_passed'] = True
             response['message'] = quiz.success_text
         else:
             response['message'] = quiz.fail_text
 
+        print response
         return Response(response)
 
 
