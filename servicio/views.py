@@ -290,7 +290,7 @@ class Quiz_Create_Sitting_View(APIView):
 
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
     queryset = Sitting.objects.all()
-    serializer_class = Sitting_Serializer
+    serializer_class = Sitting_Update_Serializer
     permission_classes = (AllowAny, )
 
 
