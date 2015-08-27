@@ -65,7 +65,7 @@ routerQuiz = format_suffix_patterns([
 	#sitting
 	url(r'^allSitting$', Quiz_Sitting_View.as_view(), name='Sitting'),
 	url(r'^sitting/(?P<pk_quiz>[0-9]+)/$', Quiz_Create_Sitting_View.as_view(), name='takeQuiz'),
-	url(r'^updateSitting/(?P<pk_quiz>[0-9]+)/$', Quiz_update_sitting_View.as_view({'put': 'update'}), name='updateSitting'),
+	url(r'^updateSitting/(?P<pk>[0-9]+)/$', Quiz_update_sitting_View.as_view({'put': 'update'}), name='updateSitting'),
 
 	# check quiz 
 	url(r'^qualify$', Quiz_Qualify_View.as_view(), name='qualifyQuiz'),
