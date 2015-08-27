@@ -125,11 +125,11 @@ class Sitting_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """
-    get_percent_correct = serializers.IntegerField()
-    check_if_passed = serializers.BooleanField()
-    result_message = serializers.CharField()
-    questions_with_user_answers = serializers.CharField()
-    get_max_score = serializers.IntegerField()
+    get_percent_correct = serializers.IntegerField(required=False, default=0)
+    check_if_passed = serializers.BooleanField(required=False, default=False)
+    result_message = serializers.CharField(required=False, allow_blank=True, default='')
+    questions_with_user_answers = serializers.CharField(required=False,allow_blank=True ,default='')
+    get_max_score = serializers.IntegerField(required=False)
 
     class Meta():
         model = Sitting

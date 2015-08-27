@@ -274,7 +274,7 @@ class Quiz_Create_Sitting_View(APIView):
                     'incorrect_questions':"",
                     'current_score':0,
                     'complete':False,
-                    'user_answers':"{}",'questions_with_user_answers':"{}"}
+                    'user_answers':"{}"}
 
         #print sitting
 
