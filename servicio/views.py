@@ -274,7 +274,7 @@ class Quiz_Take_View(APIView):
                     'incorrect_questions':"",
                     'current_score':0,
                     'complete':False,
-                    'user_answers':'{}','questions_with_user_answers':''}
+                    'user_answers':'','questions_with_user_answers':''}
 
         #print sitting
 
