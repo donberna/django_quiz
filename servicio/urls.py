@@ -44,6 +44,7 @@ routerQuiz = format_suffix_patterns([
 	url(r'^marking/detail/(?P<pk>[0-9]+)/$', Quiz_Marking_Detail_View.as_view({'get': 'retrieve'}), name='markingQuiz'),
 	url(r'^take/(?P<pk_quiz>[0-9]+)/$', Quiz_Take_View.as_view(), name='takeQuiz'),
 	url(r'^qualify$', Quiz_Qualify_View.as_view(), name='qualifyQuiz'),
+	url(r'^checkPassed$', Quiz_Check_Passed_View.as_view(), name='checkPassedQuiz'),
 	url(r'^progress$', Quiz_User_Progress_View.as_view() , name='progressQuiz'),
 	url(r'^progress/exams/(?P<pk>[0-9]+)/$',  Quiz_show_exams_View.as_view() , name='progressExamsQuiz'),
 	])
