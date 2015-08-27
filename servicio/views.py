@@ -239,7 +239,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import status
 
-class Quiz_Take_View(APIView):
+class Quiz_Create_Sitting_View(APIView):
     
     permission_classes = (AllowAny,)
 
@@ -278,7 +278,7 @@ class Quiz_Take_View(APIView):
 
         #print sitting
 
-        return super(Quiz_Take_View, self).dispatch(request, *args, **kwargs)
+        return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         serializer = Sitting_Serializer(data=self.sitting)
@@ -287,6 +287,12 @@ class Quiz_Take_View(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+
+class Quiz_update_sitting_View(viewsets.ModelViewSet):
+    queryset = Sitting.objects.all()
+    serializer_class = Sitting_Serializer
+    permission_classes = (AllowAny, )
+
 
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):

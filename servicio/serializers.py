@@ -127,8 +127,8 @@ class Sitting_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = Sitting
-        fields = ('user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_current_score', 'get_percent_correct', 'get_incorrect_questions', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
-
+        fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
+        read_only_fields = ('id')
 
 class Progress_Serializer(serializers.ModelSerializer):
     """
