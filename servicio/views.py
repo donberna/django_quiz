@@ -327,6 +327,8 @@ class Quiz_Qualify_View(APIView):
             serializer_ans = Answer_MC_Question_Serializer(answer)
             print serializer_ans
 
+            serializer_ans.data.update({'answerMC': content})
+
             if serializer_ans.data['correct']:
                 correcta = True
             else:
@@ -340,6 +342,7 @@ class Quiz_Qualify_View(APIView):
 
         print correcta
         data = serializer.data
+        data.update({'clase': clase})
         data.update({'correcta': correcta})
         data.update({'answered': answered})
 
