@@ -290,7 +290,7 @@ class Quiz_Create_Sitting_View(APIView):
 
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
     queryset = Sitting.objects.all()
-    serializer_class = Sitting_Update_Serializer
+    serializer_class = Sitting_Serializer
     permission_classes = (AllowAny, )
 
 
@@ -346,7 +346,7 @@ class Quiz_Qualify_View(APIView):
         return Response(data)
         #return Response({'correcta':correcta, 'explanation': serializer.data['explanation']})
     
-
+"""
 class Quiz_Check_Passed_View(APIView):
     def post(self, request):
         id_quiz = request.POST['id_quiz']        
@@ -364,7 +364,7 @@ class Quiz_Check_Passed_View(APIView):
 
         print response
         return Response(response)
-
+"""
 
 #-----------------------------------
 #	finish Quiz 

@@ -120,7 +120,7 @@ class Quiz_Serializer(serializers.ModelSerializer):
 #-----------------------------------
 #   finish Quiz 
 #-----------------------------------
-class Sitting_Serializer(serializers.ModelSerializer):
+class Sitting_retrieve_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """
@@ -131,19 +131,13 @@ class Sitting_Serializer(serializers.ModelSerializer):
 
 
 
-class Sitting_Update_Serializer(serializers.ModelSerializer):
+class Sitting_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
-    """
-    get_percent_correct = serializers.IntegerField(required=False, default=0)
-    check_if_passed = serializers.BooleanField(required=False, default=False)
-    result_message = serializers.CharField(required=False, allow_blank=True, default='')
-    questions_with_user_answers = serializers.CharField(required=False,allow_blank=True ,default='')
-    get_max_score = serializers.IntegerField(required=False)
-
+    """    
     class Meta():
         model = Sitting
-        fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
+        fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end')
         read_only_fields = ('id')
 
 class Progress_Serializer(serializers.ModelSerializer):
