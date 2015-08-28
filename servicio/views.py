@@ -327,7 +327,7 @@ class Quiz_Qualify_View(APIView):
             serializer_ans = Answer_MC_Question_Serializer(answer)
             print serializer_ans
 
-            serializer_ans.data.update({'answerMC': content})
+            serializer.update({'answerMC': serializer_ans.data['content']})
 
             if serializer_ans.data['correct']:
                 correcta = True
