@@ -408,7 +408,7 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
 
 class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
-    serializer_class = Sitting_Serializer
+    serializer_class = Sitting_retrieve_Serializer
 
     def get_queryset(self):
         return Sitting.objects.filter(id = self.kwargs['pk'])
