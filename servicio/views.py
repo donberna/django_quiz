@@ -397,6 +397,7 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
 
     def get_queryset(self):    
         queryset = Sitting.objects.filter(complete=True)
+        return queryset
 
     #    """
     #    Aqui se acomoda lo de filtrar por el usuario 
