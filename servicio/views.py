@@ -393,7 +393,7 @@ class Sitting_Filter_Title_Mixin(object):
 #trae la lista de quizes completos de todos los usuarios 
 class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, generics.ListAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = Sitting_Serializer
+    serializer_class = Sitting_retrieve_Serializer
 
     def get_queryset(self):    
         queryset = Sitting.objects.filter(complete=True)
