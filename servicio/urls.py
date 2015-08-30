@@ -19,7 +19,7 @@ routerQuestions = format_suffix_patterns([
 	url(r'^createEssay$', Essay_Create_View.as_view() , name='createEssay'),
 	url(r'^listEssay$', Essay_List_View.as_view() , name='listEssay'),
 
-	url(r'^detail/(?P<pk>[0-9]+)/$', Question_Detail_View.as_view() , name='questionDetail'),
+	#url(r'^detail/(?P<pk>[0-9]+)/$', Question_Detail_View.as_view() , name='questionDetail'),
 	])
 
 

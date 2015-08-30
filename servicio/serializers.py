@@ -105,6 +105,11 @@ class Quiz_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """
+
+    category = serializers.SerializerMethodField()
+    def get_category(self, obj):
+        return obj.category.category
+
     class Meta():
         model = Quiz
         fields = ('id' ,'title', 'description', 'url', 'category', 'random_order', 'max_questions', 'answers_at_end', 'exam_paper', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
@@ -124,6 +129,16 @@ class Sitting_retrieve_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """
+    quiz = serializers.SerializerMethodField()
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, obj):
+        return  obj.user.get_full_name()
+
+
+    def get_quiz(self, obj):
+        return obj.quiz.title
+
     class Meta():
         model = Sitting
         fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
