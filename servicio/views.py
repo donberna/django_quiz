@@ -179,7 +179,7 @@ class Quiz_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Quiz
 	  """
-	  serializer_class = Quiz_Serializer
+	  serializer_class = Quiz_Retrieve_Serializer
 	  permission_classes = (AllowAny,)
 
 	  def get_queryset(self):
@@ -193,7 +193,7 @@ class Quiz_Detail_View(viewsets.ReadOnlyModelViewSet):
     """
     permission_classes = (AllowAny,)
     queryset = Quiz.objects.all()
-    serializer_class = Quiz_Serializer
+    serializer_class = Quiz_Retrieve_Serializer
 
 
 from django.shortcuts import get_object_or_404
