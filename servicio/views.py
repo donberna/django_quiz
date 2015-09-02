@@ -251,7 +251,7 @@ class Quiz_Create_Sitting_View(APIView):
         #print id_quiz
 
         #se pregunta si el usuario esta autenticado  
-        logged_in_user = request.POST['logged_in_user']
+        logged_in_user = request.POST['logged']
 
         # se ontienen las preguntas del quiz 
         if quiz.random_order is True:
