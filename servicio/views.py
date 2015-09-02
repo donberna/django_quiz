@@ -278,7 +278,8 @@ class Quiz_Create_Sitting_View(APIView):
                     'complete':False,
                     'user_answers':"{}"}
 
-        #print sitting"""
+        #print sitting
+        """
 
         return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
 
