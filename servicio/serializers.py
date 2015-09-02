@@ -97,6 +97,18 @@ class Subcategory_Serializer(serializers.ModelSerializer):
         model = SubCategory
 
 
+class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
+    """
+    Serializer Class to retrieve SubCategory
+    """
+    category = serializers.SerializerMethodField()
+    
+    def get_category(self, obj):
+        return obj.category.category
+
+    class Meta():
+        model = SubCategory
+
 #-----------------------------------
 #   Quiz
 #-----------------------------------

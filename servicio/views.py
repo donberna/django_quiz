@@ -157,7 +157,7 @@ class Subcategory_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all SubCategory
 	  """
-	  serializer_class = Subcategory_Serializer
+	  serializer_class = Subcategory_Retrieve_Serializer
 	  queryset = SubCategory.objects.all()
 	  permission_classes = (AllowAny,)
 
@@ -243,44 +243,7 @@ class Quiz_Create_Sitting_View(APIView):
     
     permission_classes = (AllowAny,)
 
-    def dispatch(self, request, *args, **kwargs):
-        
-        """#se obtiene el quiz 
-        quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
-        id_quiz = quiz.id
-        #print id_quiz
-
-        #se pregunta si el usuario esta autenticado  
-        print request.POST
-        logged_in_user = request.POST.get('logged', "")
-        print logged_in_user
-
-        # se ontienen las preguntas del quiz 
-        if quiz.random_order is True:
-            question_set = Question.objects.filter(quiz= quiz.id).order_by('?')
-        else:
-            question_set = Question.objects.filter(quiz= quiz.id)
-
-        question_set = question_set.values_list('id', flat=True)
-        if quiz.max_questions and quiz.max_questions < len(question_set):
-            question_set = question_set[: quiz.max_questions]
-
-        questions = ",".join(map(str, question_set)) + ","
-        #print questions
-
-        #1 crear el sitting con lo q ya tengo 
-        self.sitting = { 'user':logged_in_user,
-                    'quiz':id_quiz,
-                    'question_order':questions,
-                    'question_list':questions,
-                    'incorrect_questions':"",
-                    'current_score':0,
-                    'complete':False,
-                    'user_answers':"{}"}
-
-        #print sitting
-    """
-
+    def dispatch(self, request, *args, **kwargs):    
         return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -289,9 +252,6 @@ class Quiz_Create_Sitting_View(APIView):
         id_quiz = quiz.id
         #print id_quiz
 
-        #se pregunta si el usuario esta autenticado  
-        
-        
         logged_in_user = request.POST['id']
         print logged_in_user
 
