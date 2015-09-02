@@ -245,7 +245,7 @@ class Quiz_Create_Sitting_View(APIView):
 
     def dispatch(self, request, *args, **kwargs):
         
-    """#se obtiene el quiz 
+        """#se obtiene el quiz 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
         id_quiz = quiz.id
         #print id_quiz
@@ -279,7 +279,7 @@ class Quiz_Create_Sitting_View(APIView):
                     'user_answers':"{}"}
 
         #print sitting
-        """
+    """
 
         return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
 
