@@ -26,6 +26,16 @@ class True_False_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+class True_False_Update_View(viewsets.ModelViewSet):
+    """
+      A simple View to create a new True_False question 
+      """
+      serializer_class = TF_Question_Serializer
+      queryset = TF_Question.objects.all()
+      permission_classes = (AllowAny,)
+
+
+
 class Multichoice_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new Multichoice question.
@@ -41,6 +51,15 @@ class Multichoice_List_View(generics.ListAPIView):
 	  serializer_class = MC_Retireve_Question_Serializer
 	  queryset = MCQuestion.objects.all()
 	  permission_classes = (AllowAny,)
+
+
+class Multichoice_Update_View(viewsets.ModelViewSet):
+      """
+      A simple View to show all Multichoice questions
+      """
+      serializer_class = MC_Retireve_Question_Serializer
+      queryset = MCQuestion.objects.all()
+      permission_classes = (AllowAny,)
 
 
 class Multichoice_Answer_Create(generics.CreateAPIView):
@@ -92,6 +111,15 @@ class Essay_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+class Essay_Update_View(viewsets.ModelViewSet):
+      """
+      A simple View to show all Essay questions
+      """
+      serializer_class = E_Retireve_Question_Serializer
+      queryset = Essay_Question.objects.all()
+      permission_classes = (AllowAny,)
+
+
 class Question_Detail_View(APIView):
     """
     View to bring the info of a quiz
@@ -136,6 +164,17 @@ class Category_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+
+class Category_Update_View(viewsets.ModelViewSet):
+      """
+      A simple View to show all Category
+      """
+      serializer_class = Category_Serializer
+      queryset = Category.objects.all()
+      permission_classes = (AllowAny,)
+
+
+
 class Subcategory_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new SubCategory.
@@ -153,10 +192,18 @@ class Subcategory_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+class subCategory_Update_View(viewsets.ModelViewSet):
+      """
+      A simple View to show all Category
+      """
+      serializer_class = Subcategory_Retrieve_Serializer
+      queryset = SubCategory.objects.all()
+      permission_classes = (AllowAny,)
+
+
 #-----------------------------------
 #	Quiz
 #-----------------------------------
-
 
 class Quiz_Create_View(generics.CreateAPIView):
 	  """
@@ -179,6 +226,15 @@ class Quiz_List_View(generics.ListAPIView):
 
 
 class Quiz_Detail_View(viewsets.ReadOnlyModelViewSet):
+    """
+    View to bring the info of a quiz
+    """
+    permission_classes = (AllowAny,)
+    queryset = Quiz.objects.all()
+    serializer_class = Quiz_Retrieve_Serializer
+
+
+class Quiz_Update_View(viewsets.ModelViewSet):
     """
     View to bring the info of a quiz
     """
@@ -335,26 +391,6 @@ class Quiz_Qualify_View(APIView):
 
         return Response(data)
         #return Response({'correcta':correcta, 'explanation': serializer.data['explanation']})
-    
-"""
-class Quiz_Check_Passed_View(APIView):
-    def post(self, request):
-        id_quiz = request.POST['id_quiz']        
-        percent = int(request.POST['percent'])
-
-        quiz = Quiz.objects.get(id = id_quiz) 
-        response = {'check_if_passed':False, 'message': ''}
-
-        if(percent >= quiz.pass_mark):
-            print 'entro'
-            response['check_if_passed'] = True
-            response['message'] = quiz.success_text
-        else:
-            response['message'] = quiz.fail_text
-
-        print response
-        return Response(response)
-"""
 
 #-----------------------------------
 #	finish Quiz 

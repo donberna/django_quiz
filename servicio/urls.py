@@ -9,15 +9,18 @@ from .views import *
 routerQuestions = format_suffix_patterns([
 	url(r'^createTrueFalse$', True_False_Create_View.as_view() , name='createTrueFalse'),
 	url(r'^listTrueFalse$', True_False_List_View.as_view() , name='listTrueFalse'),
+	url(r'^updateTrueFalse/(?P<pk>[0-9]+)/$', True_False_Update_View.as_view({'put': 'update'}), name='updateTrueFalse'),
 
 	url(r'^createMultichoice$', Multichoice_Create_View.as_view() , name='createMultichoice'),
 	url(r'^listMultichoice$', Multichoice_List_View.as_view() , name='listMultichoice'),
+	url(r'^updateMultichoice/(?P<pk>[0-9]+)/$', Multichoice_Update_View.as_view({'put': 'update'}), name='updateMultichoice'),
 
 	url(r'^createAnswerMultichoice$', Multichoice_Answer_Create.as_view() , name='createMultichoice'),
 	url(r'^MultichoiceAnswerList/(?P<pk>[0-9]+)/$', Multichoice_Answer_List_View.as_view() , name='createMultichoice'),
 
 	url(r'^createEssay$', Essay_Create_View.as_view() , name='createEssay'),
 	url(r'^listEssay$', Essay_List_View.as_view() , name='listEssay'),
+	url(r'^updateEssay/(?P<pk>[0-9]+)/$', Essay_Update_View.as_view({'put': 'update'}), name='updateEssay'),
 
 	url(r'^detail/(?P<pk>[0-9]+)/$', Question_Detail_View.as_view() , name='questionDetail'),
 	])
@@ -25,31 +28,30 @@ routerQuestions = format_suffix_patterns([
 
 #category
 #urls for Updating
-"""
-routerCategoryDetail = CategoryUpdateView.as_view({
-    'get': 'retrieve',
-    'put': 'update',
-    'delete': 'destroy',
-})"""
+
 
 routerCategory = format_suffix_patterns([
 	
 	url(r'^createCategory$', Category_Create_View.as_view() , name='createCategory'),
 	url(r'^listCategory$', Category_List_View.as_view() , name='listCategory'),	
+	url(r'^updateCategory/(?P<pk>[0-9]+)/$', Category_Update_View.as_view({'put': 'update'}), name='updateCategory'),
 
 	url(r'^createSubcategory$', Subcategory_Create_View.as_view() , name='createSubcategory'),
 	url(r'^listSubcategory$', Subcategory_List_View.as_view() , name='listSubcategory'),
+	url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update'}), name='updateSubCategory'),
+
+	url(r'^(?P<pk>[0-9]+)$', routerCategoryDetail, name='ask-update'),
 
 	])		
 
 #Quiz
 #urls for Updating
-"""
-routerQuizDetail = QuizUpdateView.as_view({
+
+routerQuizDetail = Quiz_Update_View.as_view({
     'get': 'retrieve',
     'put': 'update',
     'delete': 'destroy',
-})"""
+})
 
 routerQuiz = format_suffix_patterns([
 	
@@ -57,6 +59,7 @@ routerQuiz = format_suffix_patterns([
 	url(r'^listQuiz$', Quiz_List_View.as_view() , name='listQuiz'),
 	url(r'^listQuizbyCategory/(?P<category_name>[\w.-]+)$', Quiz_List_by_Category_View.as_view() , name='listQuizbyCategory'),
 	url(r'^detail/(?P<pk>[0-9]+)/$', Quiz_Detail_View.as_view({'get': 'retrieve'}), name='detailQuiz'),
+	url(r'^(?P<pk>[0-9]+)/$', routerQuizDetail, name='updateSubCategory'),
 	
 	# quiz end
 	url(r'^marking$', Quiz_Marking_List_View.as_view(), name='markingQuiz'),
