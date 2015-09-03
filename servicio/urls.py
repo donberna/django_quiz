@@ -40,8 +40,6 @@ routerCategory = format_suffix_patterns([
 	url(r'^listSubcategory$', Subcategory_List_View.as_view() , name='listSubcategory'),
 	url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update'}), name='updateSubCategory'),
 
-	url(r'^(?P<pk>[0-9]+)$', routerCategoryDetail, name='ask-update'),
-
 	])		
 
 #Quiz

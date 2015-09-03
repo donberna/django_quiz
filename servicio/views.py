@@ -27,8 +27,8 @@ class True_False_List_View(generics.ListAPIView):
 
 
 class True_False_Update_View(viewsets.ModelViewSet):
-    """
-      A simple View to create a new True_False question 
+      """
+      A simple View to show all True_False questions
       """
       serializer_class = TF_Question_Serializer
       queryset = TF_Question.objects.all()
@@ -192,7 +192,7 @@ class Subcategory_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
-class subCategory_Update_View(viewsets.ModelViewSet):
+class SubCategory_Update_View(viewsets.ModelViewSet):
       """
       A simple View to show all Category
       """
