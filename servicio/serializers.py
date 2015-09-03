@@ -83,7 +83,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = MCQuestion
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'answer_order', 'clase')
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'answer_order', 'clase')
         read_only_fields = ('id', 'clase')
 
 
@@ -115,7 +115,7 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = Essay_Question
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'clase')
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'clase')
         read_only_fields = ('id', 'clase')
 
 
