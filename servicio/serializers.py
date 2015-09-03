@@ -25,6 +25,14 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    sub_category = serializers.SerializerMethodField()
+    
+    def get_category(self, obj):
+        return str(obj.category.category)
+
+    def get_sub_category(self, obj):
+        return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(TF_Question))
@@ -60,6 +68,14 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    sub_category = serializers.SerializerMethodField()
+    
+    def get_category(self, obj):
+        return str(obj.category.category)
+
+    def get_sub_category(self, obj):
+        return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(MCQuestion))
@@ -84,6 +100,14 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    sub_category = serializers.SerializerMethodField()
+    
+    def get_category(self, obj):
+        return str(obj.category.category)
+
+    def get_sub_category(self, obj):
+        return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(Essay_Question))
