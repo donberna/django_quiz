@@ -82,7 +82,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
         return tipo
 
     class Meta():
-        model = TF_Question
+        model = MCQuestion
         fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'answer_order', 'clase')
         read_only_fields = ('id', 'clase')
 
@@ -114,7 +114,7 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
         return tipo#   
 
     class Meta():
-        model = TF_Question
+        model = Essay_Question
         fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'clase')
         read_only_fields = ('id', 'clase')
 
