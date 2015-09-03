@@ -104,22 +104,13 @@ class Question_Detail_View(APIView):
         
         if clase is ContentType.objects.get_for_model(Essay_Question):
             serializer = E_Retireve_Question_Serializer(queryset)
-            #data = serializer.data
-            #data.update({'clase': str(clase)})
-            
         
         if clase is ContentType.objects.get_for_model(MCQuestion):
             serializer = MC_Retireve_Question_Serializer(queryset)
-            #data = serializer.data
-            #data.update({'clase': str(clase)})
         
         if clase is ContentType.objects.get_for_model(TF_Question):
             serializer = TF_Retireve_Question_Serializer(queryset)
-            #data = serializer.data
-            #data.update({'clase': str(clase)})
-
-        
-        #return Response(serializer.data)
+            
         return Response(serializer.data)
         
 
@@ -337,7 +328,7 @@ class Quiz_Qualify_View(APIView):
 
         print correcta
         data = serializer.data
-        data.update({'clase': clase})
+        #data.update({'clase': clase})
         data.update({'answerMC': mc_answer})
         data.update({'correcta': correcta})
         data.update({'answered': answered})
