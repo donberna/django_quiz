@@ -21,7 +21,7 @@ class True_False_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all True_False questions
 	  """
-	  serializer_class = TF_Question_Serializer
+	  serializer_class = TF_Retireve_Question_Serializer
 	  queryset = TF_Question.objects.all()
 	  permission_classes = (AllowAny,)
 
@@ -38,7 +38,7 @@ class Multichoice_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Multichoice questions
 	  """
-	  serializer_class = Multichoice_Serializer
+	  serializer_class = MC_Retireve_Question_Serializer
 	  queryset = MCQuestion.objects.all()
 	  permission_classes = (AllowAny,)
 
@@ -87,7 +87,7 @@ class Essay_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Essay questions
 	  """
-	  serializer_class = E_Question_Serializer
+	  serializer_class = E_Retireve_Question_Serializer
 	  queryset = Essay_Question.objects.all()
 	  permission_classes = (AllowAny,)
 

@@ -6,19 +6,11 @@ from true_false.models import TF_Question
 from multichoice.models import MCQuestion, Answer
 from essay.models import Essay_Question
 from quiz.models import Category, SubCategory, Sitting, Progress, Quiz
-
+from django.contrib.contenttypes.models import ContentType
 
 #-----------------------------------
 #   questions 
 #-----------------------------------
-
-class Question_Serializer(serializers.ModelSerializer):
-    """
-    Serializer Class to create TF_Question
-    """
-    class Meta():
-        model = Question
-
 
 class TF_Question_Serializer(serializers.ModelSerializer):
     """
@@ -26,6 +18,22 @@ class TF_Question_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = TF_Question
+
+
+class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
+    """
+    Serializer Class to create TF_Question
+    """
+    clase = serializers.SerializerMethodField()
+    
+    def get_clase(self, obj):
+        tipo = str(ContentType.objects.get_for_model(TF_Question))
+        return tipo
+
+    class Meta():
+        model = TF_Question
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'clase')
+        read_only_fields = ('id', 'clase')
 
 
 class Answer_MC_Question_Serializer(serializers.ModelSerializer):
@@ -38,28 +46,6 @@ class Answer_MC_Question_Serializer(serializers.ModelSerializer):
         fields = ( 'id', 'question', 'content', 'correct')
 
 
-"""
-class Create_MC_Question_Serializer(serializers.ModelSerializer):
-    
-    # fields anwers
-    answer = Create_Answer_MC_Question_Serializer(many=True)
-    #print answer
-
-    def create(self, validated_data):
-        answer_content_data = validated_data.pop('content')
-        answer_correct_data = validated_data.pop('correct')
-        ans = Answer.objects.create(answer_correct_data,answer_content_data)
-        mcquestion = MCQuestion.objects.create(answer = ans, **validated_data)        
-
-        return MCQuestion.objects.create(answer = ans, **validated_data)
-    #print answer
-
-    class Meta():
-        model = MCQuestion
-        fields = ( 'id', 'quiz', 'category', 'sub_category', 'figure', 'content', 'explanation', 'objects', 'answer')
-        read_only_fields = ('id')
-"""
-
 
 class Multichoice_Serializer(serializers.ModelSerializer):
     """
@@ -69,12 +55,44 @@ class Multichoice_Serializer(serializers.ModelSerializer):
         model = MCQuestion
 
 
+class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
+    """
+    Serializer Class to create TF_Question
+    """
+    clase = serializers.SerializerMethodField()
+    
+    def get_clase(self, obj):
+        tipo = str(ContentType.objects.get_for_model(MCQuestion))
+        return tipo
+
+    class Meta():
+        model = TF_Question
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'answer_order', 'clase')
+        read_only_fields = ('id', 'clase')
+
+
 class E_Question_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Essay_Question
     """
     class Meta():
         model = Essay_Question
+
+
+class E_Retireve_Question_Serializer(serializers.ModelSerializer):
+    """
+    Serializer Class to create TF_Question
+    """
+    clase = serializers.SerializerMethodField()
+    
+    def get_clase(self, obj):
+        tipo = str(ContentType.objects.get_for_model(Essay_Question))
+        return tipo#   
+
+    class Meta():
+        model = TF_Question
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'clase')
+        read_only_fields = ('id', 'clase')
 
 
 #-----------------------------------
