@@ -120,7 +120,7 @@ class Question_Detail_View(APIView):
 
         
         #return Response(serializer.data)
-        return Response(data)
+        return Response(serializer)
         
 
 
