@@ -9,18 +9,18 @@ from .views import *
 routerQuestions = format_suffix_patterns([
 	url(r'^createTrueFalse$', True_False_Create_View.as_view() , name='createTrueFalse'),
 	url(r'^listTrueFalse$', True_False_List_View.as_view() , name='listTrueFalse'),
-	url(r'^updateTrueFalse/(?P<pk>[0-9]+)/$', True_False_Update_View.as_view({'put': 'update'}), name='updateTrueFalse'),
+	url(r'^updateTrueFalse/(?P<pk>[0-9]+)/$', True_False_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateTrueFalse'),
 
 	url(r'^createMultichoice$', Multichoice_Create_View.as_view() , name='createMultichoice'),
 	url(r'^listMultichoice$', Multichoice_List_View.as_view() , name='listMultichoice'),
-	url(r'^updateMultichoice/(?P<pk>[0-9]+)/$', Multichoice_Update_View.as_view({'put': 'update'}), name='updateMultichoice'),
+	url(r'^updateMultichoice/(?P<pk>[0-9]+)/$', Multichoice_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateMultichoice'),
 
 	url(r'^createAnswerMultichoice$', Multichoice_Answer_Create.as_view() , name='createMultichoice'),
 	url(r'^MultichoiceAnswerList/(?P<pk>[0-9]+)/$', Multichoice_Answer_List_View.as_view() , name='createMultichoice'),
 
 	url(r'^createEssay$', Essay_Create_View.as_view() , name='createEssay'),
 	url(r'^listEssay$', Essay_List_View.as_view() , name='listEssay'),
-	url(r'^updateEssay/(?P<pk>[0-9]+)/$', Essay_Update_View.as_view({'put': 'update'}), name='updateEssay'),
+	url(r'^updateEssay/(?P<pk>[0-9]+)/$', Essay_Update_View.as_view({'put': 'update', 'delete': 'destroy' }), name='updateEssay'),
 
 	url(r'^detail/(?P<pk>[0-9]+)/$', Question_Detail_View.as_view() , name='questionDetail'),
 	])
@@ -34,11 +34,11 @@ routerCategory = format_suffix_patterns([
 	
 	url(r'^createCategory$', Category_Create_View.as_view() , name='createCategory'),
 	url(r'^listCategory$', Category_List_View.as_view() , name='listCategory'),	
-	url(r'^updateCategory/(?P<pk>[0-9]+)/$', Category_Update_View.as_view({'put': 'update'}), name='updateCategory'),
+	url(r'^updateCategory/(?P<pk>[0-9]+)/$', Category_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateCategory'),
 
 	url(r'^createSubcategory$', Subcategory_Create_View.as_view() , name='createSubcategory'),
 	url(r'^listSubcategory$', Subcategory_List_View.as_view() , name='listSubcategory'),
-	url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update'}), name='updateSubCategory'),
+	url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateSubCategory'),
 
 	])		
 
