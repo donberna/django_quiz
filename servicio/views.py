@@ -225,15 +225,6 @@ class Quiz_List_View(generics.ListAPIView):
 	  	return queryset.filter(draft=False)
 
 
-class Quiz_Detail_View(viewsets.ReadOnlyModelViewSet):
-    """
-    View to bring the info of a quiz
-    """
-    permission_classes = (AllowAny,)
-    queryset = Quiz.objects.all()
-    serializer_class = Quiz_Retrieve_Serializer
-
-
 class Quiz_Update_View(viewsets.ModelViewSet):
     """
     View to bring the info of a quiz

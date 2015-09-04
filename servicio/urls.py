@@ -56,8 +56,7 @@ routerQuiz = format_suffix_patterns([
 	url(r'^createQuiz$', Quiz_Create_View.as_view() , name='createQuiz'),
 	url(r'^listQuiz$', Quiz_List_View.as_view() , name='listQuiz'),
 	url(r'^listQuizbyCategory/(?P<category_name>[\w.-]+)$', Quiz_List_by_Category_View.as_view() , name='listQuizbyCategory'),
-	url(r'^detail/(?P<pk>[0-9]+)/$', Quiz_Detail_View.as_view({'get': 'retrieve'}), name='detailQuiz'),
-	url(r'^(?P<pk>[0-9]+)/$', routerQuizDetail, name='updateSubCategory'),
+	url(r'^detail/(?P<pk>[0-9]+)/$', routerQuizDetail, name='detailQuiz'),
 	
 	# quiz end
 	url(r'^marking$', Quiz_Marking_List_View.as_view(), name='markingQuiz'),
