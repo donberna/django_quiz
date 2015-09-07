@@ -32,13 +32,13 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.category == None:
             return ""
         else:
-            return str(obj.category.category)    
+            return {'id':obj.category.id,'nombre':str(obj.category.category)}    
 
     def get_sub_category(self, obj):
         if obj.sub_category ==None:
             return ""
         else: 
-            return str(obj.sub_category.sub_category)
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(TF_Question))
@@ -81,13 +81,13 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.category == None:
             return ""
         else:
-            return str(obj.category.category)    
+            return {'id':obj.category.id,'nombre':str(obj.category.category)}    
 
     def get_sub_category(self, obj):
         if obj.sub_category ==None:
             return ""
         else: 
-            return str(obj.sub_category.sub_category)
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(MCQuestion))
@@ -119,13 +119,13 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.category == None:
             return ""
         else:
-            return str(obj.category.category)    
+            return {'id':obj.category.id,'nombre':str(obj.category.category)}        
 
     def get_sub_category(self, obj):
         if obj.sub_category ==None:
             return ""
         else: 
-            return str(obj.sub_category.sub_category)
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(Essay_Question))
@@ -167,7 +167,7 @@ class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
         if obj.category == None:
             return ""
         else:
-            return str(obj.category.category)    
+            return {'id':obj.category.id,'nombre':str(obj.category.category)}        
 
     class Meta():
         model = SubCategory
@@ -197,7 +197,7 @@ class Quiz_Retrieve_Serializer(serializers.ModelSerializer):
         if obj.category == None:
             return ""
         else:
-            return str(obj.category.category)    
+            return {'id':obj.category.id,'nombre':str(obj.category.category)}    
 
     class Meta():
         model = Quiz
