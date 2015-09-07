@@ -38,7 +38,7 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.sub_category ==None:
             return ""
         else: 
-            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(TF_Question))
@@ -87,7 +87,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.sub_category ==None:
             return ""
         else: 
-            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(MCQuestion))
@@ -125,7 +125,7 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
         if obj.sub_category ==None:
             return ""
         else: 
-            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.category)}    
+            return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(Essay_Question))
