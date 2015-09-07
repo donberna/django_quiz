@@ -59,7 +59,10 @@ class SubCategory(models.Model):
         verbose_name_plural = _("Sub-Categories")
 
     def __str__(self):
-        return self.sub_category + " (" + self.category.category + ")"
+        if self.category == None:
+            return self.sub_category + " ( "  + ")"
+        else:
+            return self.sub_category + " (" + self.category.category + ")"
 
 
 @python_2_unicode_compatible
@@ -156,7 +159,8 @@ class Quiz(models.Model):
         return self.title
 
     def get_questions(self):
-        return self.question_set.all().select_subclasses()
+        return Question.objects.filter(quiz = self.id)
+        #return self.question_set.all().select_subclasses()
 
     @property
     def get_max_score(self):
@@ -390,6 +394,8 @@ class Sitting(models.Model):
                                  verbose_name=_("Start"))
 
     end = models.DateTimeField(null=True, blank=True, verbose_name=_("End"))
+
+    #readonly_fields = [ 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score']
 
     objects = SittingManager()
 

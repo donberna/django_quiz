@@ -29,10 +29,16 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
     sub_category = serializers.SerializerMethodField()
     
     def get_category(self, obj):
-        return str(obj.category.category)
+        if obj.category == None:
+            return ""
+        else:
+            return str(obj.category.category)    
 
     def get_sub_category(self, obj):
-        return str(obj.sub_category.sub_category)
+        if obj.sub_category ==None:
+            return ""
+        else: 
+            return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(TF_Question))
@@ -72,10 +78,16 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
     sub_category = serializers.SerializerMethodField()
     
     def get_category(self, obj):
-        return str(obj.category.category)
+        if obj.category == None:
+            return ""
+        else:
+            return str(obj.category.category)    
 
     def get_sub_category(self, obj):
-        return str(obj.sub_category.sub_category)
+        if obj.sub_category ==None:
+            return ""
+        else: 
+            return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(MCQuestion))
@@ -104,10 +116,16 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
     sub_category = serializers.SerializerMethodField()
     
     def get_category(self, obj):
-        return str(obj.category.category)
+        if obj.category == None:
+            return ""
+        else:
+            return str(obj.category.category)    
 
     def get_sub_category(self, obj):
-        return str(obj.sub_category.sub_category)
+        if obj.sub_category ==None:
+            return ""
+        else: 
+            return str(obj.sub_category.sub_category)
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(Essay_Question))
@@ -146,7 +164,10 @@ class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     
     def get_category(self, obj):
-        return obj.category.category
+        if obj.category == None:
+            return ""
+        else:
+            return str(obj.category.category)    
 
     class Meta():
         model = SubCategory
@@ -173,7 +194,10 @@ class Quiz_Retrieve_Serializer(serializers.ModelSerializer):
 
     category = serializers.SerializerMethodField()
     def get_category(self, obj):
-        return obj.category.category
+        if obj.category == None:
+            return ""
+        else:
+            return str(obj.category.category)    
 
     class Meta():
         model = Quiz

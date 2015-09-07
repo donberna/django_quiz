@@ -10,7 +10,8 @@ from essay.models import Essay_Question
 #comentario
 class SittingAdmin(admin.ModelAdmin):
     model = Sitting
-
+    fields = ('user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
+    readonly_fields = [ 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score']
 
 class AnswerInline(admin.TabularInline):
     model = Answer
