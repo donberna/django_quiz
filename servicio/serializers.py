@@ -7,6 +7,7 @@ from multichoice.models import MCQuestion, Answer
 from essay.models import Essay_Question
 from quiz.models import Category, SubCategory, Sitting, Progress, Quiz
 from django.contrib.contenttypes.models import ContentType
+import json
 
 #-----------------------------------
 #   questions 
@@ -60,7 +61,6 @@ class Answer_MC_Question_Serializer(serializers.ModelSerializer):
         fields = ( 'id', 'question', 'content', 'correct')
 
 
-
 class Multichoice_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to list TF_Question
@@ -76,6 +76,18 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
     clase = serializers.SerializerMethodField()
     category = serializers.SerializerMethodField()
     sub_category = serializers.SerializerMethodField()
+    answers = serializers.SerializerMethodField()
+    
+    def get_answers(self, obj):
+        print 'anwers'
+        objectQuerySet = Answer.objects.filter(question = obj.id)
+        if len(objectQuerySet) == 0:
+            return '{}'
+        else:
+            data = []
+            for item in objectQuerySet:
+                data.append('{ id:'+str(item.id)+', question:'+str(item.question.id)+', content:'+item.content+', correct:'+str(item.correct)+'}')
+            return data
     
     def get_category(self, obj):
         if obj.category == None:
@@ -95,7 +107,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = MCQuestion
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'answer_order', 'clase')
+        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'answer_order', 'clase', 'answers')
         read_only_fields = ('id', 'clase')
 
 
@@ -114,7 +126,8 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
     clase = serializers.SerializerMethodField()
     category = serializers.SerializerMethodField()
     sub_category = serializers.SerializerMethodField()
-    
+
+
     def get_category(self, obj):
         if obj.category == None:
             return ""
