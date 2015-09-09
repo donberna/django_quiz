@@ -55,12 +55,6 @@ class Answer_MC_Question_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Asks
     """
-    question = serializers.CharField(style={'input_type': 'hidden'})
-
-    def get_question(self, obj):
-        print obj
-        return "quuest"
-            
     
     class Meta():
         model = Answer
