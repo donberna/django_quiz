@@ -86,7 +86,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
         else:
             data = []
             for item in objectQuerySet:
-                data.append("{ 'id':"+str(item.id)+", 'question':"+str(item.question.id)+", 'content':"+item.content+", 'correct':"+str(item.correct)+"}")
+                data.append('{ "id":'+str(item.id)+', "question":'+str(item.question.id)+', "content":"'+item.content+'", "correct":"'+str(item.correct)+'"}')
             return data
     
     def get_category(self, obj):
