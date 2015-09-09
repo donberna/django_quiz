@@ -2,6 +2,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets, generics
+from rest_framework.parsers import JSONParser
+
 from .serializers import *
 
 # Create your views here.
@@ -68,6 +70,21 @@ class Multichoice_Answer_Create(generics.CreateAPIView):
       """
       serializer_class = Answer_MC_Question_Serializer
       permission_classes = (AllowAny,)
+
+
+class Multichoice_Answer_Create_multiple(APIView):
+    parser_classes = (JSONParser,)
+    permission_classes = (AllowAny,)
+  
+    def post(self, request, format=None):
+        print("recibo algo")
+        print(request)
+        print(request.POST)
+        print(request.GET)
+        print(type(request.data))
+        
+        return Response({'received data': "ok"})
+    
 
 
 class Multichoice_Answer_List_View(generics.ListAPIView):
