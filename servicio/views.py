@@ -103,7 +103,7 @@ class Multichoice_Answer_Create_multiple(APIView):
         for index in range(number):
           print index
           string = str(index)
-          print hola[string+'content']
+          print hola[string+'[content]']
 
 
           #answer_create = { 'question': question.id,
