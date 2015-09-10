@@ -102,8 +102,8 @@ class Multichoice_Answer_Create_multiple(APIView):
         print request.POST.dict()
         for index in range(number):
           print index
-          print request.POST.get(index)
-          print hola[index]
+          
+          print hola[index+'content']
 
 
           #answer_create = { 'question': question.id,
