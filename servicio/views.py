@@ -80,7 +80,7 @@ class Multichoice_Answer_Create_multiple(APIView):
   
     def post(self, request, format=None):
         print("recibo algo")
-        answers = json.loads(request.POST.get('_content'))
+        answers = request.POST.get('_content')
         print answers
         id_q =  request.POST.get('id_ask')
         #id_q = id_q['id_ask']
