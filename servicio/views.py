@@ -72,16 +72,32 @@ class Multichoice_Answer_Create(generics.CreateAPIView):
       permission_classes = (AllowAny,)
 
 
+import json
 class Multichoice_Answer_Create_multiple(APIView):
     parser_classes = (JSONParser,)
     permission_classes = (AllowAny,)
+    print 'Multichoice_Answer_Create_multiple'
   
     def post(self, request, format=None):
         print("recibo algo")
-        print(request)
-        print(request.POST)
-        print(request.GET)
-        print(type(request.data))
+        answers = json.loads(request.POST.get('_content'))
+        print answers
+        id_q =  answers[0]
+        id_q = id_q['id_ask']
+        question = MCQuestion.objects.get(id=id_q)
+
+        for answer in answers:
+    
+          content = answer['content']
+          correct = answer['correct']
+
+          serializer = Answer_MC_Question_Serializer(data = { 'question' : question, 'content' : content, 'correct' : correct})
+          if serializer.is_valid():
+              serializer.save()
+              return Response(serializer.data, status=status.HTTP_201_CREATED)
+          else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
         
         return Response({'received data': "ok"})
     
