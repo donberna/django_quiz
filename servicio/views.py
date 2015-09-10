@@ -92,9 +92,9 @@ class Multichoice_Answer_Create_multiple(APIView):
 
         answers =  request.POST.dict()
         
-        print answers['items']
+        #print answers['items']
         print request.POST.get('items')
-        
+
         for answer in answers:
       
 
