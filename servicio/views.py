@@ -90,7 +90,8 @@ class Multichoice_Answer_Create_multiple(APIView):
         print id_q
         #question = MCQuestion.objects.get(id=id_q)
 
-        number = request.POST.get('number')
+        number = int(request.POST.get('number'))
+
 
         print number
         #print answers['contenido[]']
