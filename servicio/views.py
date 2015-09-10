@@ -81,30 +81,29 @@ class Multichoice_Answer_Create_multiple(APIView):
     def post(self, request, format=None):
         print("recibo algo")
         print request.POST
-        print request.POST.get('_content')
-        answers = json.loads(request.POST.get('_content'))
-        print answers
+        #print request.POST.get('_content')
+        #answers = json.loads(request.POST.get('_content'))
         
-        #id_q = request.POST.get('id_ask')
+        id_q = request.POST.get('id_ask')
         #id_q =  answers[0]
         #id_q = id_q['id_ask']
-        #print id_q
+        print id_q
         #question = MCQuestion.objects.get(id=id_q)
 
-        #number = int(request.POST.get('number'))
+        number = int(request.POST.get('number'))
 
 
-        #print number
+        print number
         #print answers['contenido[]']
         #print answers[0]
         #print answers['items']
         #print request.POST.get('items')
-        #hola = request.POST.dict() 
-        #print request.POST.dict()
+        hola = request.POST.dict() 
+        print request.POST.dict()
         for index in range(number):
           print index
-          
-          print hola[index+'content']
+          string = str(index)
+          print hola[string+'content']
 
 
           #answer_create = { 'question': question.id,
