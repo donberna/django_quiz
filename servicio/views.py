@@ -100,29 +100,23 @@ class Multichoice_Answer_Create_multiple(APIView):
         #print request.POST.get('items')
         diccionario = request.POST.dict() 
         print request.POST.dict()
-        for index in range(number):
-          print index
-          string = str(index)
-          print diccionario[string+'[content]']
-          content = diccionario[string+'[content]']
-          print content
-          correct = diccionario[string+'[correct]']
-          print correct
-          #answer_create = { 'question': question.id,
-                      #'content':answer['content'],
-                      #'correct':answer['answer']}
-          #content = answer['content']
-          
-          #correct = answer['correct']
-          
-
-          serializer = Answer_MC_Question_Serializer(data = {'question': question, 'content' : content, 'correct' : correct})
-          if serializer.is_valid():
-              serializer.save()
-              print 'creo'
-              #return Response(serializer.data, status=status.HTTP_201_CREATED)
-          else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if number!= 0 :
+          pass
+          for index in range(number):
+            #print index
+            string = str(index)
+            #print diccionario[string+'[content]']
+            content = diccionario[string+'[content]']
+            #print content
+            correct = diccionario[string+'[correct]']
+            #print correct
+            serializer = Answer_MC_Question_Serializer(data = {'question': question, 'content' : content, 'correct' : correct})
+            if serializer.is_valid():
+                serializer.save()
+                print 'creo'
+                #return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         
         return Response({'received data': "ok"})
