@@ -84,14 +84,14 @@ class Multichoice_Answer_Create_multiple(APIView):
         #print request.POST.get('_content')
         #answers = json.loads(request.POST.get('_content'))
         
-        id_q = request.POST.get('id_ask')
+        #id_q = request.POST.get('id_ask')
         #id_q =  answers[0]
         #id_q = id_q['id_ask']
-        print id_q
-        question = MCQuestion.objects.get(id=id_q)
+        #print id_q
+        #question = MCQuestion.objects.get(id=id_q)
 
         answers =  request.POST.dict()
-        
+        print answers
         #print answers['items']
         #print request.POST.get('items')
 
