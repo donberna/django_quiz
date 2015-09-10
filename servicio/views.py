@@ -120,7 +120,7 @@ class Multichoice_Answer_Create_multiple(APIView):
           if serializer.is_valid():
               serializer.save()
               print 'creo'
-              return Response(serializer.data, status=status.HTTP_201_CREATED)
+              #return Response(serializer.data, status=status.HTTP_201_CREATED)
           else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
