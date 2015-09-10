@@ -102,7 +102,9 @@ class Multichoice_Answer_Create_multiple(APIView):
                       #'content':answer['content'],
                       #'correct':answer['answer']}
           content = answer['content']
+          print content
           correct = answer['correct']
+          print correct
 
           serializer = Answer_MC_Question_Serializer(data = {'question': question, 'content' : content, 'correct' : correct})
           if serializer.is_valid():
