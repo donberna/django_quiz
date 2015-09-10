@@ -88,7 +88,7 @@ class Multichoice_Answer_Create_multiple(APIView):
         #id_q =  answers[0]
         #id_q = id_q['id_ask']
         print id_q
-        #question = MCQuestion.objects.get(id=id_q)
+        question = MCQuestion.objects.get(id=id_q)
 
         number = int(request.POST.get('number'))
 
@@ -98,21 +98,23 @@ class Multichoice_Answer_Create_multiple(APIView):
         #print answers[0]
         #print answers['items']
         #print request.POST.get('items')
-        hola = request.POST.dict() 
+        diccionario = request.POST.dict() 
         print request.POST.dict()
         for index in range(number):
           print index
           string = str(index)
-          print hola[string+'[content]']
-
-
+          print diccionario[string+'[content]']
+          content = diccionario[string+'[content]']
+          print content
+          correct = diccionario[string+'[correct]']
+          print correct
           #answer_create = { 'question': question.id,
                       #'content':answer['content'],
                       #'correct':answer['answer']}
-          content = answer['content']
-          print content
-          correct = answer['correct']
-          print correct
+          #content = answer['content']
+          
+          #correct = answer['correct']
+          
 
           serializer = Answer_MC_Question_Serializer(data = {'question': question, 'content' : content, 'correct' : correct})
           if serializer.is_valid():
