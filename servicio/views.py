@@ -435,6 +435,8 @@ class Quiz_update_sitting_View(viewsets.ModelViewSet):
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
+    permission_classes = (AllowAny,)
+    
     def post(self,request):
         print 'post'
         print ContentType.objects.get_for_model(MCQuestion)
