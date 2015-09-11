@@ -397,7 +397,7 @@ class Quiz_Create_Sitting_View(APIView):
         print logged_in_user
 
         sitting = Sitting.objects.user_sitting(logged_in_user, quiz)
-        return  sitting
+        return  Response(sitting)
         """
         #se busca si ya hay un sitting asosiado a ese usuario con ese quiz 
         #sitting = Sitting.objects.filter(quiz = id_quiz, user = logged_in_user)
