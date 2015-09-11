@@ -391,47 +391,17 @@ class Quiz_Create_Sitting_View(APIView):
 
         # se obtienen el quiz y el usuario 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
-        #id_quiz = quiz.id
-
-        logged_in_user = request.POST['id']
-        print logged_in_user
+        #logged_in_user = request.POST['id']
+        logged_in_user = self.context['request'].user
+        
+        # se llama a la funcion del modelo donde 
+        # 1. busca el sitting por usuario y quiz 
+        #   1.1 si existe lo retorna, y si hay varios retorna el que no esta terminado
+        # 2. Si no encuentra un sitting asosiado lo crea 
 
         sitting = Sitting.objects.user_sitting(logged_in_user, quiz)
         serializer = Sitting_Serializer(sitting)
         return  Response(serializer.data)
-        """
-        #se busca si ya hay un sitting asosiado a ese usuario con ese quiz 
-        #sitting = Sitting.objects.filter(quiz = id_quiz, user = logged_in_user)
-
-        # se obtienen las preguntas del quiz 
-        if quiz.random_order is True:
-            question_set = Question.objects.filter(quiz= quiz.id).order_by('?')
-        else:
-            question_set = Question.objects.filter(quiz= quiz.id)
-
-        question_set = question_set.values_list('id', flat=True)
-        if quiz.max_questions and quiz.max_questions < len(question_set):
-            question_set = question_set[: quiz.max_questions]
-
-        questions = ",".join(map(str, question_set)) + ","
-        #print questions
-
-        #1 crear el sitting con lo q ya tengo 
-        self.sitting = { 'user':logged_in_user,
-                    'quiz':id_quiz,
-                    'question_order':questions,
-                    'question_list':questions,
-                    'incorrect_questions':"",
-                    'current_score':0,
-                    'complete':False,
-                    'user_answers':"{}"}
-
-        serializer = Sitting_Serializer(data=self.sitting)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        """
         
 
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
@@ -455,9 +425,11 @@ class Quiz_Qualify_View(APIView):
         mc_answer = ""
         
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
-            
+            print 'TF_Question'
             question = TF_Question.objects.get(id = id)
             serializer = TF_Retireve_Question_Serializer(question)
+
+            print question.check_if_correct(answered)
 
             if str(serializer.data['correct']) == answered:
                 correcta = True
@@ -469,6 +441,7 @@ class Quiz_Qualify_View(APIView):
             
             question = MCQuestion.objects.get(id = id)
             serializer= MC_Retireve_Question_Serializer(question)
+            print question.check_if_correct(answered)
 
             answer = Answer.objects.get(id = answered)
             serializer_ans = Answer_MC_Question_Serializer(answer)
@@ -482,8 +455,10 @@ class Quiz_Qualify_View(APIView):
 
             
         if clase == str(ContentType.objects.get_for_model(Essay_Question)):
+            print 'E_Question'
             question = Question.objects.get(id = id)
             serializer= E_Retireve_Question_Serializer(question)
+            print question.check_if_correct(answered)
             correcta = False
 
         print correcta
