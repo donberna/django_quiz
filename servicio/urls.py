@@ -17,6 +17,7 @@ routerQuestions = format_suffix_patterns([
 
 	url(r'^createAnswerMultichoice$', Multichoice_Answer_Create.as_view() , name='createMultichoice'),
 	url(r'^createMultipleAnswerMultichoice$', Multichoice_Answer_Create_multiple.as_view() , name='createMultichoice_many'),
+	url(r'^updateMultipleAnswerMultichoice$', Multichoice_Answer_Update_multiple.as_view() , name='createMultichoice_many'),
 	url(r'^MultichoiceAnswerList/(?P<pk>[0-9]+)/$', Multichoice_Answer_List_View.as_view() , name='createMultichoice'),
 
 	url(r'^createEssay$', Essay_Create_View.as_view() , name='createEssay'),

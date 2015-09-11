@@ -76,7 +76,6 @@ import json
 class Multichoice_Answer_Create_multiple(APIView):
     parser_classes = (JSONParser,)
     permission_classes = (AllowAny,)
-    print 'Multichoice_Answer_Create_multiple'
   
     def post(self, request, format=None):
         print("recibo algo")
@@ -121,6 +120,57 @@ class Multichoice_Answer_Create_multiple(APIView):
         
         return Response({'received data': "ok"})
     
+
+class Multichoice_Answer_Update_multiple(APIView):
+    parser_classes = (JSONParser,)
+    permission_classes = (AllowAny,)
+  
+    def post(self, request, format=None):
+        print("recibo algo")
+        print request.POST
+        #print request.POST.get('_content')
+        #answers = json.loads(request.POST.get('_content'))
+        
+        id_q = request.POST.get('id_ask')
+        #id_q =  answers[0]
+        #id_q = id_q['id_ask']
+        print id_q
+        question = MCQuestion.objects.get(id=id_q)
+
+        number = int(request.POST.get('number'))
+
+
+        print number
+        #print answers['contenido[]']
+        #print answers[0]
+        #print answers['items']
+        #print request.POST.get('items')
+        diccionario = request.POST.dict() 
+        print request.POST.dict()
+        if number!= 0 :
+          pass
+          for index in range(number):
+            #print index
+            string = str(index)
+            #print diccionario[string+'[content]']
+            id_answer = diccionario[string+'[id]']
+            answer = Answer.objects.get(id =id_answer)
+            print answer
+            #print id_answer
+            content = diccionario[string+'[content]']
+            #print content
+            correct = diccionario[string+'[correct]']
+            #print correct
+            serializer = Answer_MC_Question_Serializer(answer, data = {'question': question, 'content' : content, 'correct' : correct})
+            if serializer.is_valid():
+                serializer.save()
+                print 'Actualizo'
+                #return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
+        return Response({'received data': "ok"})
 
 
 class Multichoice_Answer_List_View(generics.ListAPIView):
