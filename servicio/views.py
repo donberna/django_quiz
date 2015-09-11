@@ -391,9 +391,9 @@ class Quiz_Create_Sitting_View(APIView):
 
         # se obtienen el quiz y el usuario 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
-        #logged_in_user = request.POST['id']
-        logged_in_user = self.context['request'].user
-        
+        #logged_in_user = request.POST['id']  | User.objects.get(pk=pk)
+        logged_in_user = request.user
+
         # se llama a la funcion del modelo donde 
         # 1. busca el sitting por usuario y quiz 
         #   1.1 si existe lo retorna, y si hay varios retorna el que no esta terminado
