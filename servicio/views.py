@@ -389,14 +389,20 @@ class Quiz_Create_Sitting_View(APIView):
 
     def post(self, request, *args, **kwargs):
 
+        # se obtienen el quiz y el usuario 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
         id_quiz = quiz.id
-        #print id_quiz
 
         logged_in_user = request.POST['id']
         print logged_in_user
 
-        # se ontienen las preguntas del quiz 
+        sitting = Sitting.objects.user_sitting(logged_in_user, id_quiz)
+        return  sitting
+        """
+        #se busca si ya hay un sitting asosiado a ese usuario con ese quiz 
+        #sitting = Sitting.objects.filter(quiz = id_quiz, user = logged_in_user)
+
+        # se obtienen las preguntas del quiz 
         if quiz.random_order is True:
             question_set = Question.objects.filter(quiz= quiz.id).order_by('?')
         else:
@@ -424,6 +430,7 @@ class Quiz_Create_Sitting_View(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        """
         
 
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
