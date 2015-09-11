@@ -392,8 +392,6 @@ class Quiz_Create_Sitting_View(APIView):
 
         # se obtienen el quiz y el usuario 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
-        #logged_in_user = request.POST['id']  | 
-
         logged_in_user = User.objects.get(pk= request.POST['id'])
 
         # se llama a la funcion del modelo donde 
@@ -432,11 +430,13 @@ class Quiz_Qualify_View(APIView):
             serializer = TF_Retireve_Question_Serializer(question)
 
             print question.check_if_correct(answered)
-
+            correcta = question.check_if_correct(answered)
+            """
             if str(serializer.data['correct']) == answered:
                 correcta = True
             else:
                 correcta = False
+            """
 
         if clase == str(ContentType.objects.get_for_model(MCQuestion)):
             print 'MC_Question'
@@ -444,24 +444,27 @@ class Quiz_Qualify_View(APIView):
             question = MCQuestion.objects.get(id = id)
             serializer= MC_Retireve_Question_Serializer(question)
             print question.check_if_correct(answered)
-
-            answer = Answer.objects.get(id = answered)
-            serializer_ans = Answer_MC_Question_Serializer(answer)
+            correcta = question.check_if_correct(answered)
+            #answer = Answer.objects.get(id = answered)
+            #serializer_ans = Answer_MC_Question_Serializer(answer)
             
-            mc_answer = serializer_ans.data['content']
-
+            #mc_answer = serializer_ans.data['content']
+            mc_answer = question.answer_choice_to_string(answered)
+            """
             if serializer_ans.data['correct']:
                 correcta = True
             else:
                 correcta = False
+            """
 
             
         if clase == str(ContentType.objects.get_for_model(Essay_Question)):
             print 'E_Question'
-            question = Question.objects.get(id = id)
+            question = Essay_Question.objects.get(id = id)
             serializer= E_Retireve_Question_Serializer(question)
             print question.check_if_correct(answered)
-            correcta = False
+            correcta = question.check_if_correct(answered)
+            #correcta = False
 
         print correcta
         data = serializer.data
