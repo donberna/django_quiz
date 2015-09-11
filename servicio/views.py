@@ -3,7 +3,6 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets, generics
 from rest_framework.parsers import JSONParser
-from Services.users.models import User
 
 from .serializers import *
 
@@ -393,10 +392,7 @@ class Quiz_Create_Sitting_View(APIView):
         # se obtienen el quiz y el usuario 
         quiz = get_object_or_404(Quiz, id=self.kwargs['pk_quiz'])
         #logged_in_user = request.POST['id']  | 
-        print request
-        print request.POST
         logged_in_user = User.objects.get(pk= request.POST['id'])
-
 
         # se llama a la funcion del modelo donde 
         # 1. busca el sitting por usuario y quiz 
