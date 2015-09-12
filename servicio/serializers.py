@@ -252,10 +252,12 @@ class Sitting_retrieve_Serializer(serializers.ModelSerializer):
 
             for question in questions:
 
-                tipo = str(ContentType.objects.get_for_model (Question.objects.get_subclass(id = question)))
-                if tipo == 'Essay style question':
+                if question != '':
+                    
+                    tipo = str(ContentType.objects.get_for_model (Question.objects.get_subclass(id = question)))
+                    if tipo == 'Essay style question':
         
-                    qualify = qualify + question + ","
+                        qualify = qualify + question + ","
 
             return qualify
         else:
