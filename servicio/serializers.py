@@ -240,6 +240,26 @@ class Sitting_retrieve_Serializer(serializers.ModelSerializer):
     """
     quiz = serializers.SerializerMethodField()
     user = serializers.SerializerMethodField()
+    qualify = serializers.SerializerMethodField()
+
+    def get_qualify(self, obj):
+        #print obj.incorrect_questions
+        #print obj.incorrect_questions.split(',')
+        questions = obj.incorrect_questions.split(',')
+        qualify = ""
+
+        if len(obj.incorrect_questions) > 0:
+
+            for question in questions:
+
+                tipo = str(ContentType.objects.get_for_model (Question.objects.get_subclass(id = question)))
+                if tipo == 'Essay style question':
+        
+                    qualify = qualify + question + ","
+
+            return qualify
+        else:
+            return  ""
 
     def get_user(self, obj):
         return  obj.user.get_full_name()
@@ -250,7 +270,7 @@ class Sitting_retrieve_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = Sitting
-        fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score')
+        fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end', 'get_percent_correct', 'check_if_passed', 'result_message', 'questions_with_user_answers', 'get_max_score', 'qualify')
         read_only_fields = ('id')
 
 

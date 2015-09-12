@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets, generics
 from rest_framework.parsers import JSONParser
-from users.models import *
+#from users.models import *
 
 from .serializers import *
 
@@ -79,42 +79,24 @@ class Multichoice_Answer_Create_multiple(APIView):
     permission_classes = (AllowAny,)
   
     def post(self, request, format=None):
-        print("recibo algo")
-        print request.POST
-        #print request.POST.get('_content')
-        #answers = json.loads(request.POST.get('_content'))
-        
+        #print("recibo algo")
+
         id_q = request.POST.get('id_ask')
-        #id_q =  answers[0]
-        #id_q = id_q['id_ask']
-        print id_q
         question = MCQuestion.objects.get(id=id_q)
-
         number = int(request.POST.get('number'))
-
-
-        print number
-        #print answers['contenido[]']
-        #print answers[0]
-        #print answers['items']
-        #print request.POST.get('items')
         diccionario = request.POST.dict() 
-        print request.POST.dict()
+
         if number!= 0 :
-          pass
+          
           for index in range(number):
-            #print index
             string = str(index)
-            #print diccionario[string+'[content]']
             content = diccionario[string+'[content]']
-            #print content
             correct = diccionario[string+'[correct]']
-            #print correct
             serializer = Answer_MC_Question_Serializer(data = {'question': question, 'content' : content, 'correct' : correct})
+            
             if serializer.is_valid():
                 serializer.save()
-                print 'creo'
-                #return Response(serializer.data, status=status.HTTP_201_CREATED)
+                #print 'creo'
             else:
               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -127,46 +109,27 @@ class Multichoice_Answer_Update_multiple(APIView):
     permission_classes = (AllowAny,)
   
     def post(self, request, format=None):
-        print("recibo algo")
-        print request.POST
-        #print request.POST.get('_content')
-        #answers = json.loads(request.POST.get('_content'))
-        
+        #print("recibo algo")
+
         id_q = request.POST.get('id_ask')
-        #id_q =  answers[0]
-        #id_q = id_q['id_ask']
-        print id_q
         question = MCQuestion.objects.get(id=id_q)
-
         number = int(request.POST.get('number'))
-
-
-        print number
-        #print answers['contenido[]']
-        #print answers[0]
-        #print answers['items']
-        #print request.POST.get('items')
         diccionario = request.POST.dict() 
-        print request.POST.dict()
+    
         if number!= 0 :
-          pass
+
           for index in range(number):
-            #print index
+            
             string = str(index)
-            #print diccionario[string+'[content]']
             id_answer = diccionario[string+'[id]']
             answer = Answer.objects.get(id =id_answer)
-            print answer
-            #print id_answer
             content = diccionario[string+'[content]']
-            #print content
             correct = diccionario[string+'[correct]']
-            #print correct
             serializer = Answer_MC_Question_Serializer(answer, data = {'question': question, 'content' : content, 'correct' : correct})
+            
             if serializer.is_valid():
                 serializer.save()
-                print 'Actualizo'
-                #return Response(serializer.data, status=status.HTTP_201_CREATED)
+                #print 'Actualizo'
             else:
               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -416,8 +379,7 @@ class Quiz_Qualify_View(APIView):
     permission_classes = (AllowAny,)
     
     def post(self,request):
-        print 'post'
-        print ContentType.objects.get_for_model(MCQuestion)
+        #print 'post'
         id = request.POST['id']
         clase = request.POST['clase']
         answered = request.POST['answered']
@@ -428,34 +390,15 @@ class Quiz_Qualify_View(APIView):
             print 'TF_Question'
             question = TF_Question.objects.get(id = id)
             serializer = TF_Retireve_Question_Serializer(question)
-
-            print question.check_if_correct(answered)
             correcta = question.check_if_correct(answered)
-            """
-            if str(serializer.data['correct']) == answered:
-                correcta = True
-            else:
-                correcta = False
-            """
 
         if clase == str(ContentType.objects.get_for_model(MCQuestion)):
             print 'MC_Question'
-            
             question = MCQuestion.objects.get(id = id)
             serializer= MC_Retireve_Question_Serializer(question)
-            print question.check_if_correct(answered)
             correcta = question.check_if_correct(answered)
-            #answer = Answer.objects.get(id = answered)
-            #serializer_ans = Answer_MC_Question_Serializer(answer)
-            
-            #mc_answer = serializer_ans.data['content']
             mc_answer = question.answer_choice_to_string(answered)
-            """
-            if serializer_ans.data['correct']:
-                correcta = True
-            else:
-                correcta = False
-            """
+            
 
             
         if clase == str(ContentType.objects.get_for_model(Essay_Question)):
@@ -466,24 +409,20 @@ class Quiz_Qualify_View(APIView):
             correcta = question.check_if_correct(answered)
             #correcta = False
 
-        print correcta
+        #print correcta
         data = serializer.data
-        #data.update({'clase': clase})
         data.update({'answerMC': mc_answer})
         data.update({'correcta': correcta})
         data.update({'answered': answered})
 
         return Response(data)
-        #return Response({'correcta':correcta, 'explanation': serializer.data['explanation']})
+
 
 #-----------------------------------
 #	finish Quiz 
 #-----------------------------------
 
 class Quiz_Marker_Mixin(object):
-	# no se como acomodar esos decoradores con los permisos
-    #@method_decorator(login_required)
-    #@method_decorator(permission_required('quiz.view_sittings'))
     def dispatch(self, *args, **kwargs):
         return super(Quiz_Marker_Mixin, self).dispatch(*args, **kwargs)
 
@@ -545,7 +484,6 @@ class Quiz_User_Progress_View(generics.ListAPIView):
     queryset = Progress.objects.all()
     serializer_class = Progress_Serializer
 
-    #@method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
     	print 'dispatch'
         return super(Quiz_User_Progress_View, self)\
@@ -555,7 +493,6 @@ class Quiz_User_Progress_View(generics.ListAPIView):
 #trae todos los intentos de los quizzes de un usuario
 class Quiz_show_exams_View(generics.ListAPIView):
     permission_classes = (AllowAny,)
-    #queryset = Progress.objects.all()
     serializer_class = Sitting_Serializer #
     def get_queryset(self):
         print self.kwargs['pk']
