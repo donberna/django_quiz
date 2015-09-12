@@ -247,7 +247,7 @@ class Sitting_retrieve_Serializer(serializers.ModelSerializer):
         #print obj.incorrect_questions.split(',')
         questions = obj.incorrect_questions.split(',')
         qualify = ""
-
+        print questions
         if len(obj.incorrect_questions) > 0:
 
             for question in questions:
