@@ -477,10 +477,9 @@ class Quiz_Sitting_Change_Qualify(APIView):
           sitting.remove_incorrect_question(question)
 
       serializer = Sitting_Serializer(sitting)
-      
-      #serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
-      if serializer.is_valid():
-        serializer.save()
+      serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
+      if serializer2.is_valid():
+        serializer2.save()
 
         #print 'Actualizo'
       else:
