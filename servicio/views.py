@@ -456,6 +456,37 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
     #    return queryset
 
 
+# Para calificar una pregunta abierta 
+class Quiz_Sitting_Change_Qualify(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self,request):
+      print 'post'
+      id_sitting = request.POST.get('id_sitting')
+      id_question = request.POST.get('id_question', None)
+
+      sitting = Sitting.objects.get( id = request.POST['id'] )
+      if id_question:
+        print 'if id_question'
+        question = Question.objects.get_subclass(id=int(id_question))
+        if int(id_question) in sitting.get_incorrect_questions:
+          print 'if remove'
+          sitting.remove_incorrect_question(question)
+
+      serializer = Sitting_Serializer(sitting)
+      #serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
+      if serializer.is_valid():
+        serializer.save()
+        #print 'Actualizo'
+      else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+        
+      return Response({'msj': "Sitting actualizado"})
+
+  
+
+
 class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = Sitting_retrieve_Serializer

@@ -71,6 +71,7 @@ routerQuiz = format_suffix_patterns([
 
 	# check quiz 
 	url(r'^qualify$', Quiz_Qualify_View.as_view(), name='qualifyQuiz'),
+	url(r'^changeQualify$', Quiz_Sitting_Change_Qualify.as_view(), name='changeQualifyQuiz'),
 	#url(r'^checkPassed$', Quiz_Check_Passed_View.as_view(), name='checkPassedQuiz'),
 	
 	#progress 
