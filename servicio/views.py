@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 from rest_framework import viewsets, generics
 from rest_framework.parsers import JSONParser
-#from users.models import *
+from users.models import *
 
 from .serializers import *
 
@@ -477,14 +477,14 @@ class Quiz_Sitting_Change_Qualify(APIView):
           sitting.remove_incorrect_question(question)
 
       serializer = Sitting_Serializer(sitting)
+      serializer.save()
       #serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
-      if serializer.is_valid():
-        serializer.save()
-        #print 'Actualizo'
-      else:
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+      #if serializer.is_valid():
         
+        #print 'Actualizo'
+      #else:
+      #  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+     
       return Response({'msj': "Sitting actualizado"})
 
   
