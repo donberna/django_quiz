@@ -462,10 +462,13 @@ class Quiz_Sitting_Change_Qualify(APIView):
 
     def post(self,request):
       print 'post'
+      print request.POST
       id_sitting = request.POST.get('id_sitting')
+      print id_sitting
       id_question = request.POST.get('id_question', None)
+      print id_question
 
-      sitting = Sitting.objects.get( id = request.POST['id'] )
+      sitting = Sitting.objects.get( id = id_sitting)
       if id_question:
         print 'if id_question'
         question = Question.objects.get_subclass(id=int(id_question))
