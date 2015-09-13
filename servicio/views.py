@@ -477,13 +477,14 @@ class Quiz_Sitting_Change_Qualify(APIView):
           sitting.remove_incorrect_question(question)
 
       serializer = Sitting_Serializer(sitting)
-      serializer.save()
+      
       #serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
-      #if serializer.is_valid():
-        
+      if serializer.is_valid():
+        serializer.save()
+
         #print 'Actualizo'
-      #else:
-      #  return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
      
       return Response({'msj': "Sitting actualizado"})
 
