@@ -520,7 +520,7 @@ class Sitting(models.Model):
     @property
     def questions_with_user_answers(self):
         return {
-            str(q): q.user_answer for q in self.get_questions(with_answers=True)
+            unicode(q): q.user_answer for q in self.get_questions(with_answers=True)
         }
 
     @property
@@ -583,6 +583,6 @@ class Question(models.Model):
         verbose_name = _("Question")
         verbose_name_plural = _("Questions")
         ordering = ['category']
-
+    
     def __str__(self):
         return self.content
