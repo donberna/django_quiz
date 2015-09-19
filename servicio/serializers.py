@@ -8,6 +8,7 @@ from essay.models import Essay_Question
 from quiz.models import Category, SubCategory, Sitting, Progress, Quiz
 from django.contrib.contenttypes.models import ContentType
 import json
+from django.db import IntegrityError
 
 #-----------------------------------
 #   questions 
