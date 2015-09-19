@@ -10,6 +10,7 @@ from django.contrib.contenttypes.models import ContentType
 import json
 from django.db import IntegrityError
 from django.core.exceptions import PermissionDenied
+from  gamification.signals import post_points_quiz
 
 #-----------------------------------
 #   questions 
@@ -303,7 +304,7 @@ class Sitting_Serializer(serializers.ModelSerializer):
             post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
 
             return instance
-        except IntegrityError(e):
+        except IntegrityError:
             raise PermissionDenied
         
     class Meta():
