@@ -9,6 +9,7 @@ from quiz.models import Category, SubCategory, Sitting, Progress, Quiz
 from django.contrib.contenttypes.models import ContentType
 import json
 from django.db import IntegrityError
+from django.core.exceptions import PermissionDenied
 
 #-----------------------------------
 #   questions 
