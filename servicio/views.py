@@ -497,21 +497,6 @@ class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet)
     def get_queryset(self):
         return Sitting.objects.filter(id = self.kwargs['pk'])
 
-    # si va a cambiar el valor respuesta por 
-    """def post(self, request, *args, **kwargs):
-        sitting = self.get_object()
-
-        q_to_toggle = request.POST.get('qid', None)
-        if q_to_toggle:
-            q = Question.objects.get_subclass(id=int(q_to_toggle))
-            if int(q_to_toggle) in sitting.get_incorrect_questions:
-                sitting.remove_incorrect_question(q)
-            else:
-                sitting.add_incorrect_question(q)
-
-        return self.get(request)"""
-
-
 
 class Quiz_User_Progress_View(generics.ListAPIView):
     permission_classes = (AllowAny,)

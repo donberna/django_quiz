@@ -281,6 +281,29 @@ class Sitting_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """    
+    def update(self, instance, validated_data):
+        print "update"
+        try:
+            instance.user = validated_data.get('title', instance.user)
+            instance.quiz = validated_data.get('quiz', instance.quiz)
+            instance.question_order = validated_data.get('question_order', instance.question_order)
+            instance.question_list = validated_data.get('question_list', instance.question_list)
+            instance.incorrect_questions = validated_data.get('incorrect_questions', instance.incorrect_questions)
+            instance.current_score = validated_data.get('current_score', instance.current_score)
+            instance.complete = validated_data.get('complete', instance.complete)
+            instance.user_answers = validated_data.get('user_answers', instance.user_answers)
+            instance.start = validated_data.get('start', instance.start)
+            instance.end = validated_data.get('end', instance.end)
+
+            instance.save()
+
+            
+            post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
+
+            return instance
+        except IntegrityError(e):
+            raise PermissionDenied
+        
     class Meta():
         model = Sitting
         fields = ('id', 'user', 'quiz', 'question_order', 'question_list', 'incorrect_questions', 'current_score', 'complete', 'user_answers', 'start', 'end')
