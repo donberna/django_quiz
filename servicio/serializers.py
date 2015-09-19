@@ -10,7 +10,9 @@ from django.contrib.contenttypes.models import ContentType
 import json
 from django.db import IntegrityError
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 from  gamification.signals import post_points_quiz
+
 
 #-----------------------------------
 #   questions 
