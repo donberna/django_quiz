@@ -300,8 +300,8 @@ class Sitting_Serializer(serializers.ModelSerializer):
 
             instance.save()
 
-            
-            post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
+            if getattr(settings, 'NOTIFICATIONS', False):
+                post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
 
             return instance
         except IntegrityError:
