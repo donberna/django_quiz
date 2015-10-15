@@ -213,59 +213,64 @@ class Question_Detail_View(APIView):
 #-----------------------------------
 #	Category and Subcategory 
 #-----------------------------------
-
+"""
 class Category_Create_View(generics.CreateAPIView):
-	  """
+	  
 	  A simple View to create a new Category.
-	  """
+    
 	  serializer_class = Category_Serializer
 	  permission_classes = (AllowAny,)
 
 
 class Category_List_View(generics.ListAPIView):
-	  """
+	  
 	  A simple View to show all Category
-	  """
+	  
 	  serializer_class = Category_Serializer
 	  queryset = Category.objects.all()
 	  permission_classes = (AllowAny,)
+    
 
 
 
 class Category_Update_View(viewsets.ModelViewSet):
-      """
+      
       A simple View to show all Category
-      """
+      
       serializer_class = Category_Serializer
       queryset = Category.objects.all()
       permission_classes = (AllowAny,)
 
 
 
+
 class Subcategory_Create_View(generics.CreateAPIView):
-	  """
+	  
 	  A simple View to create a new SubCategory.
-	  """
+    
 	  serializer_class = Subcategory_Serializer
 	  permission_classes = (AllowAny,)
 
 
+
 class Subcategory_List_View(generics.ListAPIView):
-	  """
+	  
 	  A simple View to show all SubCategory
-	  """
+    
 	  serializer_class = Subcategory_Retrieve_Serializer
 	  queryset = SubCategory.objects.all()
 	  permission_classes = (AllowAny,)
 
 
+
 class SubCategory_Update_View(viewsets.ModelViewSet):
-      """
+      
       A simple View to show all Category
-      """
+      
       serializer_class = Subcategory_Retrieve_Serializer
       queryset = SubCategory.objects.all()
       permission_classes = (AllowAny,)
+"""
 
 
 #-----------------------------------

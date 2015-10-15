@@ -33,17 +33,18 @@ routerQuestions = format_suffix_patterns([
 #urls for Updating
 
 
-routerCategory = format_suffix_patterns([
+#routerCategory = format_suffix_patterns([
+		
+	#url(r'^createCategory$', Category_Create_View.as_view() , name='createCategory'),
+	#url(r'^listCategory$', Category_List_View.as_view() , name='listCategory'),	
+	#url(r'^updateCategory/(?P<pk>[0-9]+)/$', Category_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateCategory'),
+
+	#url(r'^createSubcategory$', Subcategory_Create_View.as_view() , name='createSubcategory'),
+	#url(r'^listSubcategory$', Subcategory_List_View.as_view() , name='listSubcategory'),
+	#url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateSubCategory'),
 	
-	url(r'^createCategory$', Category_Create_View.as_view() , name='createCategory'),
-	url(r'^listCategory$', Category_List_View.as_view() , name='listCategory'),	
-	url(r'^updateCategory/(?P<pk>[0-9]+)/$', Category_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateCategory'),
+	#])		
 
-	url(r'^createSubcategory$', Subcategory_Create_View.as_view() , name='createSubcategory'),
-	url(r'^listSubcategory$', Subcategory_List_View.as_view() , name='listSubcategory'),
-	url(r'^updateSubCategory/(?P<pk>[0-9]+)/$', SubCategory_Update_View.as_view({'put': 'update', 'delete': 'destroy'}), name='updateSubCategory'),
-
-	])		
 
 #Quiz
 #urls for Updating

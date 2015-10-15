@@ -5,7 +5,7 @@ from quiz.models import Question
 from true_false.models import TF_Question
 from multichoice.models import MCQuestion, Answer
 from essay.models import Essay_Question
-from quiz.models import Category, SubCategory, Sitting, Progress, Quiz
+from quiz.models import Sitting, Progress, Quiz #Category, SubCategory,
 from django.contrib.contenttypes.models import ContentType
 import json
 from django.db import IntegrityError
@@ -22,6 +22,9 @@ class TF_Question_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = TF_Question
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'correct')
+        read_only_fields = ('id')
+
 
 
 class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
@@ -29,6 +32,7 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
+    """
     category = serializers.SerializerMethodField()
     sub_category = serializers.SerializerMethodField()
     
@@ -38,11 +42,13 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
         else:
             return {'id':obj.category.id,'nombre':str(obj.category.category)}    
 
+    
     def get_sub_category(self, obj):
         if obj.sub_category ==None:
             return ""
         else: 
             return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
+    """
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(TF_Question))
@@ -50,21 +56,14 @@ class TF_Retireve_Question_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = TF_Question
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'correct', 'clase')
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'correct', 'clase')
         read_only_fields = ('id', 'clase')
 
 
 class Answer_MC_Question_Serializer(serializers.ModelSerializer):
     """
-    Serializer Class to create Asks
-    """
-    #question = serializers.CharField(style={'input_type': 'hidden'})
-
-    #def get_question(self, obj):
-    #    print obj
-    #    return "quuest"
-            
-    
+    Serializer Class to create Answer for Mc question
+    """    
     class Meta():
         model = Answer
         fields = ( 'id', 'question', 'content', 'correct')
@@ -77,6 +76,8 @@ class Multichoice_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = MCQuestion
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'answer_order')
+        read_only_fields = ('id')
 
 
 class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
@@ -84,8 +85,8 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
-    category = serializers.SerializerMethodField()
-    sub_category = serializers.SerializerMethodField()
+    #category = serializers.SerializerMethodField()
+    #sub_category = serializers.SerializerMethodField()
     answers = serializers.SerializerMethodField()
     
     def get_answers(self, obj):
@@ -99,6 +100,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
                 data.append('{ "id":'+str(item.id)+', "question":'+str(item.question.id)+', "content":"'+item.content+'", "correct":"'+str(item.correct)+'"}')
             return data
     
+    """
     def get_category(self, obj):
         if obj.category == None:
             return ""
@@ -110,6 +112,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
             return ""
         else: 
             return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
+    """
     
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(MCQuestion))
@@ -117,7 +120,7 @@ class MC_Retireve_Question_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = MCQuestion
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'answer_order', 'clase', 'answers')
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'answer_order', 'clase', 'answers')
         read_only_fields = ('id', 'clase')
 
 
@@ -127,6 +130,8 @@ class E_Question_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = Essay_Question
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation')
+        read_only_fields = ('id')
 
 
 class E_Retireve_Question_Serializer(serializers.ModelSerializer):
@@ -134,6 +139,7 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
     Serializer Class to create TF_Question
     """
     clase = serializers.SerializerMethodField()
+    """
     category = serializers.SerializerMethodField()
     sub_category = serializers.SerializerMethodField()
 
@@ -149,14 +155,14 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
             return ""
         else: 
             return {'id':obj.sub_category.id,'nombre':str(obj.sub_category.sub_category)}    
-    
+    """
     def get_clase(self, obj):
         tipo = str(ContentType.objects.get_for_model(Essay_Question))
         return tipo#   
 
     class Meta():
         model = Essay_Question
-        fields = ( 'id', 'content', 'category', 'sub_category', 'figure', 'quiz', 'explanation', 'clase')
+        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'clase')
         read_only_fields = ('id', 'clase')
 
 
@@ -164,26 +170,28 @@ class E_Retireve_Question_Serializer(serializers.ModelSerializer):
 #   Category and Subcategory 
 #-----------------------------------
 
-class Category_Serializer(serializers.ModelSerializer):
+#class Category_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to list TF_Question
-    """
+    
     class Meta():
         model = Category
+    """
 
 
-class Subcategory_Serializer(serializers.ModelSerializer):
+#class Subcategory_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create SubCategory
-    """
+    
     class Meta():
         model = SubCategory
+    """
 
 
-class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
+#class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to retrieve SubCategory
-    """
+    
     category = serializers.SerializerMethodField()
     
     def get_category(self, obj):
@@ -194,6 +202,8 @@ class Subcategory_Retrieve_Serializer(serializers.ModelSerializer):
 
     class Meta():
         model = SubCategory
+    """
+
 
 #-----------------------------------
 #   Quiz
@@ -206,7 +216,7 @@ class Quiz_Serializer(serializers.ModelSerializer):
     
     class Meta():
         model = Quiz
-        fields = ('id' ,'title', 'description', 'url', 'category', 'random_order', 'max_questions', 'answers_at_end', 'exam_paper', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
+        fields = ('id' ,'title', 'description', 'url', 'random_order', 'max_questions', 'exam_paper', 'pass_mark', 'success_text', 'fail_text', 'get_max_score', 'quiz')
         read_only_fields = ('id')
 
 
@@ -214,17 +224,17 @@ class Quiz_Retrieve_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """
-
+    """
     category = serializers.SerializerMethodField()
     def get_category(self, obj):
         if obj.category == None:
             return ""
         else:
             return {'id':obj.category.id,'nombre':str(obj.category.category)}    
-
+    """
     class Meta():
         model = Quiz
-        fields = ('id' ,'title', 'description', 'url', 'category', 'random_order', 'max_questions', 'answers_at_end', 'exam_paper', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
+        fields = ('id' ,'title', 'description', 'url', 'random_order', 'max_questions', 'answers_at_end', 'exam_paper', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
         read_only_fields = ('id')
 
 
@@ -302,7 +312,7 @@ class Sitting_Serializer(serializers.ModelSerializer):
 
             
             post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
-
+            
             return instance
         except IntegrityError:
             raise PermissionDenied
