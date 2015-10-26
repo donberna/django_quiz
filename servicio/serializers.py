@@ -294,9 +294,12 @@ class Sitting_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """    
-    def update(self, instance, validated_data):
+    def update(self, instance, validated_data, **kwargs):
         print "update"
+        badge = self.context['view'].kwargs['slug']
+        
         try:
+
             instance.user = validated_data.get('title', instance.user)
             instance.quiz = validated_data.get('quiz', instance.quiz)
             instance.question_order = validated_data.get('question_order', instance.question_order)
@@ -310,8 +313,8 @@ class Sitting_Serializer(serializers.ModelSerializer):
 
             instance.save()
 
-            
-            post_points_quiz.send(sender=Sitting_Serializer, sitting=instance)
+            # se emite senal para actualizar los puntos del progreso
+            post_points_quiz.send(sender=Sitting_Serializer, sitting=instance, badge = badge)
             
             return instance
         except IntegrityError:

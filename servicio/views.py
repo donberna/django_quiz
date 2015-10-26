@@ -278,11 +278,12 @@ class SubCategory_Update_View(viewsets.ModelViewSet):
 #-----------------------------------
 
 class Quiz_Create_View(generics.CreateAPIView):
-	  """
-	  A simple View to create a new Quiz.
-	  """
-	  serializer_class = Quiz_Serializer
-	  permission_classes = (AllowAny,)
+  """
+	A simple View to create a new Quiz.
+	"""
+  serializer_class = Quiz_Serializer
+  permission_classes = (AllowAny,)
+
 
 
 class Quiz_List_View(generics.ListAPIView):
