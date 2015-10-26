@@ -220,6 +220,10 @@ class Quiz_Serializer(serializers.ModelSerializer):
         read_only_fields = ('id')
 
 
+from rest_framework import status
+from gamification.models import Scores
+from  gamification.signals import calculate_points_end_badge
+
 class Quiz_Retrieve_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz

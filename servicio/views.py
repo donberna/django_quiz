@@ -189,7 +189,7 @@ class Essay_Update_View(viewsets.ModelViewSet):
 
 class Question_Detail_View(APIView):
     """
-    View to bring the info of a quiz
+    View to bring the info of a quesion
     """
     permission_classes = (AllowAny,)
     
@@ -305,6 +305,22 @@ class Quiz_Update_View(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = Quiz_Retrieve_Serializer
+
+    def destroy(self, request, pk, format=None, **kwargs):
+        print 'deletio'
+        quiz = self.get_object()
+        print quiz
+        score = Scores.objects.get(id_event=quiz.id)
+        print score
+
+        # Se envia la senal para disminuir los puntos con los que se gana la medalla
+        badge = kwargs['slug']
+        calculate_points_end_badge.send(sender=Quiz_Retrieve_Serializer, badge=badge, points=score.score, action='remove')
+        
+        # se borra el puntaje y el quiz 
+        score.delete()
+        quiz.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 from django.shortcuts import get_object_or_404
