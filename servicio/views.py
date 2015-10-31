@@ -12,6 +12,7 @@ from .serializers import *
 #	questions 
 #-----------------------------------
 
+# vista para crear una pregunta verdadero/falso
 class True_False_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new True_False question 
@@ -20,6 +21,7 @@ class True_False_Create_View(generics.CreateAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para listar todas las preguntas verdadero/falso
 class True_False_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all True_False questions
@@ -29,6 +31,7 @@ class True_False_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para actualizar una pregunta verdadero/falso
 class True_False_Update_View(viewsets.ModelViewSet):
       """
       A simple View to show all True_False questions
@@ -38,7 +41,7 @@ class True_False_Update_View(viewsets.ModelViewSet):
       permission_classes = (AllowAny,)
 
 
-
+# vista para crear una pregunta de opcion multiple
 class Multichoice_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new Multichoice question.
@@ -47,6 +50,7 @@ class Multichoice_Create_View(generics.CreateAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para listar todas las preguntas de opcion multiple
 class Multichoice_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Multichoice questions
@@ -56,6 +60,7 @@ class Multichoice_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para actualizar una pregunta de opcion multiple 
 class Multichoice_Update_View(viewsets.ModelViewSet):
       """
       A simple View to show all Multichoice questions
@@ -65,6 +70,7 @@ class Multichoice_Update_View(viewsets.ModelViewSet):
       permission_classes = (AllowAny,)
 
 
+# vista para crear una respuesta de preguntas de opcion multiple (me parece que nada la esta usando)
 class Multichoice_Answer_Create(generics.CreateAPIView):
       """
       A simple View to show all Multichoice questions
@@ -73,6 +79,7 @@ class Multichoice_Answer_Create(generics.CreateAPIView):
       permission_classes = (AllowAny,)
 
 
+# vista para crear varias respuestas de preguntas de opcion multiple
 import json
 class Multichoice_Answer_Create_multiple(APIView):
     parser_classes = (JSONParser,)
@@ -104,13 +111,13 @@ class Multichoice_Answer_Create_multiple(APIView):
         return Response({'received data': "ok"})
     
 
+# vista para actualizar varias respuestas de preguntas de opcion multiple
 class Multichoice_Answer_Update_multiple(APIView):
     parser_classes = (JSONParser,)
     permission_classes = (AllowAny,)
   
     def post(self, request, format=None):
-        #print("recibo algo")
-
+    
         id_q = request.POST.get('id_ask')
         question = MCQuestion.objects.get(id=id_q)
         number = int(request.POST.get('number'))
@@ -129,7 +136,6 @@ class Multichoice_Answer_Update_multiple(APIView):
             
             if serializer.is_valid():
                 serializer.save()
-                #print 'Actualizo'
             else:
               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -137,6 +143,7 @@ class Multichoice_Answer_Update_multiple(APIView):
         return Response({'received data': "ok"})
 
 
+# vista para listar todas las opciones de respuesta de una pregunta de opcion multiple
 class Multichoice_Answer_List_View(generics.ListAPIView):
       """
       A simple View to show all Multichoice questions
@@ -149,6 +156,7 @@ class Multichoice_Answer_List_View(generics.ListAPIView):
         return queryset.filter(question=self.kwargs['pk'])
 
 
+# vista para ver una opcion de respuesta multiopcion en especifico 
 class Multichoice_Answer_Detail(generics.ListAPIView):
       """
       A simple View to show all Multichoice questions
@@ -161,6 +169,8 @@ class Multichoice_Answer_Detail(generics.ListAPIView):
         return queryset.filter(question=self.kwargs['pk'])
 
 
+
+# vista para crear una pregunta abierta
 class Essay_Create_View(generics.CreateAPIView):
 	  """
 	  A simple View to create a new Essay question.
@@ -169,6 +179,7 @@ class Essay_Create_View(generics.CreateAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para listar todas las preguntas abiertas
 class Essay_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Essay questions
@@ -178,6 +189,7 @@ class Essay_List_View(generics.ListAPIView):
 	  permission_classes = (AllowAny,)
 
 
+# vista para actualizar una pregunta abierta
 class Essay_Update_View(viewsets.ModelViewSet):
       """
       A simple View to show all Essay questions
@@ -187,6 +199,7 @@ class Essay_Update_View(viewsets.ModelViewSet):
       permission_classes = (AllowAny,)
 
 
+# vista para traer una pregunta dependiendo del tipo de pregunta que se pida 
 class Question_Detail_View(APIView):
     """
     View to bring the info of a quesion
@@ -277,6 +290,7 @@ class SubCategory_Update_View(viewsets.ModelViewSet):
 #	Quiz
 #-----------------------------------
 
+#Vista para crear un quiz
 class Quiz_Create_View(generics.CreateAPIView):
   """
 	A simple View to create a new Quiz.
@@ -285,7 +299,7 @@ class Quiz_Create_View(generics.CreateAPIView):
   permission_classes = (AllowAny,)
 
 
-
+#Vista para listar todos los quices creados 
 class Quiz_List_View(generics.ListAPIView):
 	  """
 	  A simple View to show all Quiz
@@ -298,7 +312,7 @@ class Quiz_List_View(generics.ListAPIView):
 	  	return queryset.filter(draft=False)
 
 
-
+# vista para actualizar un quiz 
 class Quiz_Update_View(viewsets.ModelViewSet):
     """
     View to bring the info of a quiz
@@ -308,11 +322,11 @@ class Quiz_Update_View(viewsets.ModelViewSet):
     serializer_class = Quiz_Retrieve_Serializer
 
     def destroy(self, request, pk, format=None, **kwargs):
-        print 'deletio'
+        #print 'deletio'
         quiz = self.get_object()
-        print quiz
+        #print quiz
         score = Scores.objects.get(id_event=quiz.id)
-        print score
+        #print score
 
         # Se envia la senal para disminuir los puntos con los que se gana la medalla
         badge = kwargs['slug']
@@ -324,6 +338,7 @@ class Quiz_Update_View(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# vista para traer un quiz dependiendo de la catgoria (esta vista no esta funcionando)
 from django.shortcuts import get_object_or_404
 class Quiz_List_by_Category_View(generics.ListAPIView):
     """
@@ -355,8 +370,10 @@ class Quiz_List_by_Category_View(generics.ListAPIView):
 
 #-----------------------------------
 #	take Quiz 
+# sitting = progreso del usuario en el quiz 
 #-----------------------------------
 
+# vista para traer todos los sittings creados 
 class Quiz_Sitting_View(generics.ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Sitting.objects.all()
@@ -367,6 +384,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from rest_framework import status
 
+# vista para crear una sitting en el momento de tomar un quiz 
 class Quiz_Create_Sitting_View(APIView):
     
     permission_classes = (AllowAny,)
@@ -390,12 +408,15 @@ class Quiz_Create_Sitting_View(APIView):
         return  Response(serializer.data)
         
 
+# vista para actualizar un sitting 
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
     queryset = Sitting.objects.all()
     serializer_class = Sitting_Serializer
     permission_classes = (AllowAny, )
 
 
+#Vista pa calificar una pregunta en el momento que se hacen los quices
+# las preguntas essay por defecto quedan incorrectas 
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
@@ -410,13 +431,13 @@ class Quiz_Qualify_View(APIView):
         mc_answer = ""
         
         if clase == str(ContentType.objects.get_for_model(TF_Question)):
-            print 'TF_Question'
+            #print 'TF_Question'
             question = TF_Question.objects.get(id = id)
             serializer = TF_Retireve_Question_Serializer(question)
             correcta = question.check_if_correct(answered)
 
         if clase == str(ContentType.objects.get_for_model(MCQuestion)):
-            print 'MC_Question'
+            #print 'MC_Question'
             question = MCQuestion.objects.get(id = id)
             serializer= MC_Retireve_Question_Serializer(question)
             correcta = question.check_if_correct(answered)
@@ -425,10 +446,10 @@ class Quiz_Qualify_View(APIView):
 
             
         if clase == str(ContentType.objects.get_for_model(Essay_Question)):
-            print 'E_Question'
+            #print 'E_Question'
             question = Essay_Question.objects.get(id = id)
             serializer= E_Retireve_Question_Serializer(question)
-            print question.check_if_correct(answered)
+            #print question.check_if_correct(answered)
             correcta = question.check_if_correct(answered)
             #correcta = False
 
@@ -444,12 +465,13 @@ class Quiz_Qualify_View(APIView):
 #-----------------------------------
 #	finish Quiz 
 #-----------------------------------
-
+# no se para que era esto lo tenia la app 
 class Quiz_Marker_Mixin(object):
     def dispatch(self, *args, **kwargs):
         return super(Quiz_Marker_Mixin, self).dispatch(*args, **kwargs)
 
 
+# vista para traer un quiz por su titulo (Esto no esta funcionando) 
 class Sitting_Filter_Title_Mixin(object):
     def get_queryset(self):
         queryset = super(Sitting_Filter_Title_Mixin, self).get_queryset()
@@ -460,7 +482,7 @@ class Sitting_Filter_Title_Mixin(object):
         return queryset
 
 
-#trae la lista de quizes completos de todos los usuarios 
+#vista para traer la lista de quizes completos de todos los usuarios 
 class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, generics.ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = Sitting_retrieve_Serializer
@@ -479,24 +501,23 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
     #    return queryset
 
 
-# Para calificar una pregunta abierta 
+# vista para calificar una pregunta abierta por parte del docente 
 class Quiz_Sitting_Change_Qualify(APIView):
     permission_classes = (AllowAny,)
 
     def post(self,request):
-      print 'post'
-      print request.POST
+      #print 'post'
+  
       id_sitting = request.POST.get('id_sitting')
-      print id_sitting
       id_question = request.POST.get('id_question', None)
-      print id_question
+      
 
       sitting = Sitting.objects.get( id = id_sitting)
       if id_question:
-        print 'if id_question'
+        #print 'if id_question'
         question = Question.objects.get_subclass(id=int(id_question))
         if int(id_question) in sitting.get_incorrect_questions:
-          print 'if remove'
+          #print 'if remove'
           sitting.remove_incorrect_question(question)
 
       serializer = Sitting_Serializer(sitting)
@@ -512,7 +533,7 @@ class Quiz_Sitting_Change_Qualify(APIView):
 
   
 
-
+# vista para traer el detalle de un quiz terminado 
 class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = Sitting_retrieve_Serializer
@@ -521,23 +542,24 @@ class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet)
         return Sitting.objects.filter(id = self.kwargs['pk'])
 
 
+# vista para traer el supuesto progreso de un usuario frente a los quices (Esto no esta funcionando)
 class Quiz_User_Progress_View(generics.ListAPIView):
     permission_classes = (AllowAny,)
     queryset = Progress.objects.all()
     serializer_class = Progress_Serializer
 
     def dispatch(self, request, *args, **kwargs):
-    	print 'dispatch'
+    	#print 'dispatch'
         return super(Quiz_User_Progress_View, self)\
             .dispatch(request, *args, **kwargs)
 
 
-#trae todos los intentos de los quizzes de un usuario
+#vista para traer todos los intentos de los quizzes de un usuario
 class Quiz_show_exams_View(generics.ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = Sitting_Serializer #
     def get_queryset(self):
-        print self.kwargs['pk']
+        #print self.kwargs['pk']
         user = self.kwargs['pk']
         return Sitting.objects.filter(user=user, complete=True)
 
