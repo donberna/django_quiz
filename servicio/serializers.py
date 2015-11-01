@@ -22,7 +22,7 @@ class TF_Question_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = TF_Question
-        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'correct')
+        fields = ( 'id', 'content', 'explanation', 'correct', 'figure', 'quiz')
         read_only_fields = ('id')
 
 
@@ -76,7 +76,7 @@ class Multichoice_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = MCQuestion
-        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation', 'answer_order')
+        fields = ( 'id', 'content', 'explanation', 'answer_order', 'figure', 'quiz')
         read_only_fields = ('id')
 
 
@@ -130,7 +130,7 @@ class E_Question_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = Essay_Question
-        fields = ( 'id', 'content', 'figure', 'quiz', 'explanation')
+        fields = ( 'id', 'content', 'explanation', 'figure', 'quiz' )
         read_only_fields = ('id')
 
 
@@ -216,7 +216,7 @@ class Quiz_Serializer(serializers.ModelSerializer):
     
     class Meta():
         model = Quiz
-        fields = ('id' ,'title', 'description', 'url', 'random_order', 'max_questions', 'exam_paper', 'pass_mark', 'success_text', 'fail_text', 'get_max_score', 'quiz')
+        fields = ('id' ,'title', 'url', 'description', 'max_questions', 'pass_mark', 'success_text', 'fail_text', 'random_order', 'exam_paper', 'get_max_score', 'quiz')
         read_only_fields = ('id')
 
 
