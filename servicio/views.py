@@ -375,9 +375,10 @@ class Quiz_List_by_Category_View(generics.ListAPIView):
 
 # vista para traer todos los sittings creados 
 class Quiz_Sitting_View(generics.ListAPIView):
-    permission_classes = (AllowAny,)
     queryset = Sitting.objects.all()
     serializer_class = Sitting_Serializer
+    
+    permission_classes = (IsAuthenticated, )
 
 
 from rest_framework.response import Response
@@ -387,7 +388,7 @@ from rest_framework import status
 # vista para crear una sitting en el momento de tomar un quiz 
 class Quiz_Create_Sitting_View(APIView):
     
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
 
     def dispatch(self, request, *args, **kwargs):    
         return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
@@ -412,7 +413,7 @@ class Quiz_Create_Sitting_View(APIView):
 class Quiz_update_sitting_View(viewsets.ModelViewSet):
     queryset = Sitting.objects.all()
     serializer_class = Sitting_Serializer
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
 
 
 #Vista pa calificar una pregunta en el momento que se hacen los quices
@@ -420,7 +421,7 @@ class Quiz_update_sitting_View(viewsets.ModelViewSet):
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
-    permission_classes = (AllowAny,)
+    permission_classes = (hasPermission,)
     
     def post(self,request):
         #print 'post'
@@ -484,8 +485,9 @@ class Sitting_Filter_Title_Mixin(object):
 
 #vista para traer la lista de quizes completos de todos los usuarios 
 class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, generics.ListAPIView):
-    permission_classes = (AllowAny,)
     serializer_class = Sitting_retrieve_Serializer
+    
+    permission_classes = (hasPermission,)
 
     def get_queryset(self):    
         queryset = Sitting.objects.filter(complete=True)
@@ -503,7 +505,8 @@ class Quiz_Marking_List_View(Quiz_Marker_Mixin, Sitting_Filter_Title_Mixin, gene
 
 # vista para calificar una pregunta abierta por parte del docente 
 class Quiz_Sitting_Change_Qualify(APIView):
-    permission_classes = (AllowAny,)
+    
+    permission_classes = (hasPermission, )
 
     def post(self,request):
       #print 'post'
@@ -535,8 +538,9 @@ class Quiz_Sitting_Change_Qualify(APIView):
 
 # vista para traer el detalle de un quiz terminado 
 class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet):
-    permission_classes = (AllowAny,)
     serializer_class = Sitting_retrieve_Serializer
+    
+    permission_classes = (IsAuthenticated, )
 
     def get_queryset(self):
         return Sitting.objects.filter(id = self.kwargs['pk'])
@@ -544,9 +548,10 @@ class Quiz_Marking_Detail_View(Quiz_Marker_Mixin, viewsets.ReadOnlyModelViewSet)
 
 # vista para traer el supuesto progreso de un usuario frente a los quices (Esto no esta funcionando)
 class Quiz_User_Progress_View(generics.ListAPIView):
-    permission_classes = (AllowAny,)
     queryset = Progress.objects.all()
     serializer_class = Progress_Serializer
+    
+    permission_classes = (AllowAny,)
 
     def dispatch(self, request, *args, **kwargs):
     	#print 'dispatch'
@@ -556,8 +561,8 @@ class Quiz_User_Progress_View(generics.ListAPIView):
 
 #vista para traer todos los intentos de los quizzes de un usuario
 class Quiz_show_exams_View(generics.ListAPIView):
-    permission_classes = (AllowAny,)
     serializer_class = Sitting_Serializer #
+    permission_classes = (IsAuthenticated, )
     def get_queryset(self):
         #print self.kwargs['pk']
         user = self.kwargs['pk']
