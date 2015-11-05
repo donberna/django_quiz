@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import viewsets, generics
 from rest_framework.parsers import JSONParser
 from users.models import *
 
 from .serializers import *
-
+from .permissions import hasPermission
 # Create your views here.
 #-----------------------------------
 #	questions 
@@ -17,7 +17,7 @@ class True_False_Create_View(generics.CreateAPIView):
 	  A simple View to create a new True_False question 
 	  """
 	  serializer_class = TF_Question_Serializer
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission, )
 
 
 class True_False_List_View(generics.ListAPIView):
@@ -26,7 +26,7 @@ class True_False_List_View(generics.ListAPIView):
 	  """
 	  serializer_class = TF_Retireve_Question_Serializer
 	  queryset = TF_Question.objects.all()
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission, )
 
 
 class True_False_Update_View(viewsets.ModelViewSet):
@@ -35,7 +35,7 @@ class True_False_Update_View(viewsets.ModelViewSet):
       """
       serializer_class = TF_Question_Serializer
       queryset = TF_Question.objects.all()
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission,)
 
 
 
@@ -44,7 +44,7 @@ class Multichoice_Create_View(generics.CreateAPIView):
 	  A simple View to create a new Multichoice question.
 	  """
 	  serializer_class = Multichoice_Serializer
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission,)
 
 
 class Multichoice_List_View(generics.ListAPIView):
@@ -53,7 +53,7 @@ class Multichoice_List_View(generics.ListAPIView):
 	  """
 	  serializer_class = MC_Retireve_Question_Serializer
 	  queryset = MCQuestion.objects.all()
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission,)
 
 
 class Multichoice_Update_View(viewsets.ModelViewSet):
@@ -62,7 +62,7 @@ class Multichoice_Update_View(viewsets.ModelViewSet):
       """
       serializer_class = MC_Retireve_Question_Serializer
       queryset = MCQuestion.objects.all()
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission, )
 
 
 class Multichoice_Answer_Create(generics.CreateAPIView):
@@ -70,13 +70,13 @@ class Multichoice_Answer_Create(generics.CreateAPIView):
       A simple View to show all Multichoice questions
       """
       serializer_class = Answer_MC_Question_Serializer
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission,)
 
 
 import json
 class Multichoice_Answer_Create_multiple(APIView):
     parser_classes = (JSONParser,)
-    permission_classes = (AllowAny,)
+    permission_classes = (hasPermission,)
   
     def post(self, request, format=None):
         #print("recibo algo")
@@ -106,7 +106,7 @@ class Multichoice_Answer_Create_multiple(APIView):
 
 class Multichoice_Answer_Update_multiple(APIView):
     parser_classes = (JSONParser,)
-    permission_classes = (AllowAny,)
+    permission_classes = (hasPermission,)
   
     def post(self, request, format=None):
         #print("recibo algo")
@@ -142,7 +142,7 @@ class Multichoice_Answer_List_View(generics.ListAPIView):
       A simple View to show all Multichoice questions
       """
       serializer_class = Answer_MC_Question_Serializer
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission, )
 
       def get_queryset(self):
         queryset = Answer.objects.all();
@@ -154,7 +154,7 @@ class Multichoice_Answer_Detail(generics.ListAPIView):
       A simple View to show all Multichoice questions
       """
       serializer_class = Multichoice_Serializer
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission,)
 
       def get_queryset(self):
         queryset = Answer.objects.all();
@@ -166,7 +166,7 @@ class Essay_Create_View(generics.CreateAPIView):
 	  A simple View to create a new Essay question.
 	  """
 	  serializer_class = E_Question_Serializer
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission,)
 
 
 class Essay_List_View(generics.ListAPIView):
@@ -175,7 +175,7 @@ class Essay_List_View(generics.ListAPIView):
 	  """
 	  serializer_class = E_Retireve_Question_Serializer
 	  queryset = Essay_Question.objects.all()
-	  permission_classes = (AllowAny,)
+	  permission_classes = (hasPermission,)
 
 
 class Essay_Update_View(viewsets.ModelViewSet):
@@ -184,14 +184,14 @@ class Essay_Update_View(viewsets.ModelViewSet):
       """
       serializer_class = E_Retireve_Question_Serializer
       queryset = Essay_Question.objects.all()
-      permission_classes = (AllowAny,)
+      permission_classes = (hasPermission,)
 
 
 class Question_Detail_View(APIView):
     """
     View to bring the info of a quesion
     """
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated, )
     
     def get(self,*args, **kwargs):
         queryset = Question.objects.get_subclass(id = self.kwargs['pk'])
@@ -282,7 +282,7 @@ class Quiz_Create_View(generics.CreateAPIView):
 	A simple View to create a new Quiz.
 	"""
   serializer_class = Quiz_Serializer
-  permission_classes = (AllowAny,)
+  permission_classes = (hasPermission,)
 
 
 
@@ -291,7 +291,7 @@ class Quiz_List_View(generics.ListAPIView):
 	  A simple View to show all Quiz
 	  """
 	  serializer_class = Quiz_Retrieve_Serializer
-	  permission_classes = (AllowAny,)
+	  permission_classes = (IsAuthenticated, )
 
 	  def get_queryset(self):
 	  	queryset = Quiz.objects.all();
@@ -303,9 +303,9 @@ class Quiz_Update_View(viewsets.ModelViewSet):
     """
     View to bring the info of a quiz
     """
-    permission_classes = (AllowAny,)
     queryset = Quiz.objects.all()
     serializer_class = Quiz_Retrieve_Serializer
+    permission_classes = (hasPermission,)
 
     def destroy(self, request, pk, format=None, **kwargs):
         print 'deletio'
@@ -316,7 +316,7 @@ class Quiz_Update_View(viewsets.ModelViewSet):
 
         # Se envia la senal para disminuir los puntos con los que se gana la medalla
         badge = kwargs['slug']
-        calculate_points_end_badge.send(sender=Quiz_Retrieve_Serializer, badge=badge, points=score.score, action='remove', element='quiz', instance_element=quiz)
+        calculate_points_end_badge.send(sender=Quiz_Retrieve_Serializer, author=request.user, badge=badge, points=score.score, action='remove', element='quiz', instance_element=quiz)
         
         # se borra el puntaje y el quiz 
         score.delete()
@@ -369,7 +369,7 @@ from rest_framework import status
 
 class Quiz_Create_Sitting_View(APIView):
     
-    permission_classes = (AllowAny,)
+    permission_classes = (AllowAny, )
 
     def dispatch(self, request, *args, **kwargs):    
         return super(Quiz_Create_Sitting_View, self).dispatch(request, *args, **kwargs)
