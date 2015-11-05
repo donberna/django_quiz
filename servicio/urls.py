@@ -61,11 +61,13 @@ routerQuiz = format_suffix_patterns([
 	url(r'^createQuiz$', Quiz_Create_View.as_view() , name='createQuiz'),
 	url(r'^listQuiz$', Quiz_List_View.as_view() , name='listQuiz'),
 	#url(r'^listQuizbyCategory/(?P<category_name>[\w.-]+)$', Quiz_List_by_Category_View.as_view() , name='listQuizbyCategory'),
-	url(r'^(?P<slug>'+MODULE_SLUG_PATTERN+')/detail/(?P<pk>[0-9]+)/$', routerQuizDetail, name='detailQuiz'),
+	
 	
 	# quiz end
 	url(r'^marking$', Quiz_Marking_List_View.as_view(), name='markingQuiz'),
 	url(r'^marking/detail/(?P<pk>[0-9]+)/$', Quiz_Marking_Detail_View.as_view({'get': 'retrieve'}), name='markingQuiz'),
+	
+	url(r'^(?P<slug>'+MODULE_SLUG_PATTERN+')/detail/(?P<pk>[0-9]+)/$', routerQuizDetail, name='detailQuiz'),
 	
 	#sitting
 	url(r'^allSitting$', Quiz_Sitting_View.as_view(), name='Sitting'),
