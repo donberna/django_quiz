@@ -330,7 +330,7 @@ class Quiz_Update_View(viewsets.ModelViewSet):
 
         # Se envia la senal para disminuir los puntos con los que se gana la medalla
         badge = kwargs['slug']
-        calculate_points_end_badge.send(sender=Quiz_Retrieve_Serializer, badge=badge, points=score.score, action='remove', element='quiz', instance_element=quiz)
+        calculate_points_end_badge.send(sender=Quiz_Retrieve_Serializer,author=request.user, badge=badge, points=score.score, action='remove', element='quiz', instance_element=quiz)
         
         # se borra el puntaje y el quiz 
         score.delete()
