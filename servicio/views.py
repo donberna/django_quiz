@@ -325,7 +325,7 @@ class Quiz_Update_View(viewsets.ModelViewSet):
         #print 'deletio'
         quiz = self.get_object()
         #print quiz
-        score = Scores.objects.get(id_event=quiz.id)
+        score = Scores.objects.get(id_event=quiz.id, event= 'Quiz')
         #print score
 
         # Se envia la senal para disminuir los puntos con los que se gana la medalla
