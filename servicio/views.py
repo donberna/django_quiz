@@ -423,7 +423,7 @@ class Quiz_update_sitting_View(viewsets.ModelViewSet):
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
-    permission_classes = (hasPermission,)
+    permission_classes = (IsAuthenticated,)
     
     def post(self,request):
         #print 'post'
