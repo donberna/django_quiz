@@ -162,7 +162,7 @@ class Multichoice_Answer_Detail(generics.ListAPIView):
       A simple View to show all Multichoice questions
       """
       serializer_class = Multichoice_Serializer
-      permission_classes = (hasPermission,)
+      permission_classes = (IsAuthenticated,)
 
       def get_queryset(self):
         queryset = Answer.objects.all();
