@@ -298,9 +298,14 @@ class Sitting_Serializer(serializers.ModelSerializer):
     """
     Serializer Class to create Quiz
     """    
-    def update(self, instance, validated_data, **kwargs):
+    def update(self, instance, validated_data, *args, **kwargs):
         print "update"
+        print kwargs
+        print 'context'
         badge = self.context['view'].kwargs['slug']
+        print badge
+
+
         
         try:
 

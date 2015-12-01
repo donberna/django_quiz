@@ -510,7 +510,7 @@ class Quiz_Sitting_Change_Qualify(APIView):
     
     permission_classes = (hasPermission, )
 
-    def post(self,request):
+    def post(self,request, **kwargs):
       #print 'post'
   
       id_sitting = request.POST.get('id_sitting')
@@ -525,10 +525,10 @@ class Quiz_Sitting_Change_Qualify(APIView):
           #print 'if remove'
           sitting.remove_incorrect_question(question)
 
-      serializer = Sitting_Serializer(sitting)
-      serializer2 = Sitting_Serializer(sitting, data = serializer.data)     
+      serializer = Sitting_Serializer(sitting, context={'view': self})
+      serializer2 = Sitting_Serializer(sitting, data = serializer.data, context={'view': self})     
       if serializer2.is_valid():
-        serializer2.save()
+        serializer2.save(context={'view': self})
 
         #print 'Actualizo'
       else:
