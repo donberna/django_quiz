@@ -162,7 +162,7 @@ class Multichoice_Answer_Detail(generics.ListAPIView):
       A simple View to show all Multichoice questions
       """
       serializer_class = Multichoice_Serializer
-      permission_classes = (hasPermission,)
+      permission_classes = (IsAuthenticated,)
 
       def get_queryset(self):
         queryset = Answer.objects.all();
@@ -325,7 +325,7 @@ class Quiz_Update_View(viewsets.ModelViewSet):
         #print 'deletio'
         quiz = self.get_object()
         #print quiz
-        score = Scores.objects.get(id_event=quiz.id)
+        score = Scores.objects.get(id_event=quiz.id, event= 'Quiz')
         #print score
 
         # Se envia la senal para disminuir los puntos con los que se gana la medalla
@@ -423,7 +423,7 @@ class Quiz_update_sitting_View(viewsets.ModelViewSet):
 from django.contrib.contenttypes.models import ContentType
 class Quiz_Qualify_View(APIView):
 
-    permission_classes = (hasPermission,)
+    permission_classes = (IsAuthenticated,)
     
     def post(self,request):
         #print 'post'
