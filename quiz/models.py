@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import re
 import json
@@ -69,11 +70,11 @@ class SubCategory(models.Model):
 class Quiz(models.Model):
 
     title = models.CharField(
-        verbose_name=_("Title"),
+        verbose_name=_(u"Título"),
         max_length=60, blank=False)
 
     description = models.TextField(
-        verbose_name=_("Description"),
+        verbose_name=_(u"Descripción"),
         blank=True, help_text=_("a description of the quiz"))
 
     url = models.SlugField(
@@ -117,6 +118,7 @@ class Quiz(models.Model):
         verbose_name=_("Single Attempt"))
 
     pass_mark = models.SmallIntegerField(
+        _("Porcentaje requerido para aprobar"),
         blank=True, default=0,
         help_text=_("Percentage required to pass exam."),
         validators=[MaxValueValidator(100)])
