@@ -407,8 +407,13 @@ class Quiz_Create_Sitting_View(APIView):
         # 2. Si no encuentra un sitting asosiado lo crea 
 
         sitting = Sitting.objects.user_sitting(logged_in_user, quiz)
-        serializer = Sitting_Serializer(sitting)
-        return  Response(serializer.data)
+        print ':::::SITTIN:::::'
+        print sitting
+        if sitting != False:
+          serializer = Sitting_Serializer(sitting)
+          return  Response(serializer.data)
+        else:
+          return Response({'sitting': False})
         
 
 # vista para actualizar un sitting 

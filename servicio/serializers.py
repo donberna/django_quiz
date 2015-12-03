@@ -216,7 +216,7 @@ class Quiz_Serializer(serializers.ModelSerializer):
     
     class Meta():
         model = Quiz
-        fields = ('id' ,'title', 'url', 'description', 'max_questions', 'pass_mark', 'success_text', 'fail_text', 'random_order', 'exam_paper', 'get_max_score', 'quiz')
+        fields = ('id' ,'title', 'url', 'description', 'max_questions', 'pass_mark', 'success_text', 'fail_text', 'random_order', 'single_attempt', 'get_max_score', 'quiz')
         read_only_fields = ('id')
 
 
@@ -238,7 +238,7 @@ class Quiz_Retrieve_Serializer(serializers.ModelSerializer):
     """
     class Meta():
         model = Quiz
-        fields = ('id' ,'title', 'description', 'url', 'random_order', 'max_questions', 'exam_paper', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
+        fields = ('id' ,'title', 'description', 'url', 'random_order', 'max_questions', 'single_attempt', 'pass_mark', 'success_text', 'fail_text', 'draft', 'get_max_score', 'quiz')
         read_only_fields = ('id')
 
 

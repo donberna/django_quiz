@@ -11,7 +11,7 @@ class TF_Question(Question):
                                   help_text=_("Tick this if the question "
                                               "is true. Leave it blank for"
                                               " false."),
-                                  verbose_name=_("Correct"))
+                                  verbose_name=_("Es verdadera"))
 
     def check_if_correct(self, guess):
         if guess == "True":

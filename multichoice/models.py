@@ -6,9 +6,9 @@ from quiz.models import Question
 
 
 ANSWER_ORDER_OPTIONS = (
-    ('content', _('Content')),
-    ('random', _('Random')),
-    ('none', _('None'))
+    ('content', _('Normal')),
+    ('random', _('Aleatorio')),
+    ('none', _('Ninguno'))
 )
 
 
@@ -20,7 +20,7 @@ class MCQuestion(Question):
         help_text=_("The order in which multichoice "
                     "answer options are displayed "
                     "to the user"),
-        verbose_name=_("Answer Order"))
+        verbose_name=_("Orden de las respuestas"))
 
     def check_if_correct(self, guess):
         answer = Answer.objects.get(id=guess)

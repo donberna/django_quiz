@@ -88,13 +88,13 @@ class Quiz(models.Model):
 
     random_order = models.BooleanField(
         blank=False, default=False,
-        verbose_name=_("Random Order"),
+        verbose_name=_(u"Preguntas aleatorias"),
         help_text=_("Display the questions in "
                     "a random order or as they "
                     "are set?"))
 
     max_questions = models.PositiveIntegerField(
-        blank=True, null=True, verbose_name=_("Max Questions"),
+        blank=True, null=True, verbose_name=_(u"Maximo de preguntas"),
         help_text=_("Number of questions to be answered on each attempt."))
 
     answers_at_end = models.BooleanField(
@@ -125,10 +125,10 @@ class Quiz(models.Model):
 
     success_text = models.TextField(
         blank=True, help_text=_("Displayed if user passes."),
-        verbose_name=_("Success Text"))
+        verbose_name=_(u"Mensaje si aprueba"))
 
     fail_text = models.TextField(
-        verbose_name=_("Fail Text"),
+        verbose_name=_(u"Mensaje si no aprueba"),
         blank=True, help_text=_("Displayed if user fails."))
 
     draft = models.BooleanField(
@@ -564,20 +564,20 @@ class Question(models.Model):
     figure = models.ImageField(upload_to='uploads/%Y/%m/%d',
                                blank=True,
                                null=True,
-                               verbose_name=_("Figure"))
+                               verbose_name=_(u"imagen"))
 
     content = models.CharField(max_length=1000,
                                blank=False,
                                help_text=_("Enter the question text that "
                                            "you want displayed"),
-                               verbose_name=_('Question'))
+                               verbose_name=_(u'Pregunta'))
 
     explanation = models.TextField(max_length=2000,
                                    blank=True,
                                    help_text=_("Explanation to be shown "
                                                "after the question has "
                                                "been answered."),
-                                   verbose_name=_('Explanation'))
+                                   verbose_name=_(u'Explicacion'))
 
     objects = InheritanceManager()
 
